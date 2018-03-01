@@ -1,0 +1,5 @@
+Setup Travis as a CI system including:
+-testing
+-deploying
+-versioning
+for a dummy Helloworld project.
