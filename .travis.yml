@@ -1,0 +1,9 @@
+language: cpp
+dist: trusty
+
+before_script:
+  - mkdir build
+  - cd build
+  - cmake ..
+script:
+  - make
