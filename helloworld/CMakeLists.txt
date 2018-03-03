@@ -11,3 +11,7 @@ add_library(hw SHARED hw.cpp)
 
 add_executable(helloworld main.cpp)
 target_link_libraries(helloworld hw)
+
+enable_testing()
+
+add_subdirectory(test)
