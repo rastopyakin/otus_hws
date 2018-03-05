@@ -13,3 +13,5 @@ before_script:
 script:
   - make
   - make test
+  - cpack --config helloworld/CPackConfig.cmake
+  - ls -l

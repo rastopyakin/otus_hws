@@ -12,6 +12,12 @@ add_library(hw SHARED hw.cpp)
 add_executable(helloworld main.cpp)
 target_link_libraries(helloworld hw)
 
+install(TARGETS helloworld hw
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib)
+
+configure_file(CPackConfig.cmake.in CPackConfig.cmake)
+
 enable_testing()
 
 add_subdirectory(test)
