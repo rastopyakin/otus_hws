@@ -1,9 +1,7 @@
-#include <cassert>
-#include <cstdlib>
 #include <iostream>
 #include <string>
 #include <vector>
-
+#include <algorithm>
 // ("",  '.') -> [""]
 // ("11", '.') -> ["11"]
 // ("..", '.') -> ["", "", ""]
@@ -18,7 +16,6 @@ std::vector<std::string> split(const std::string &str, char d)
 	std::string::size_type stop = str.find_first_of(d);
 	while(stop != std::string::npos)
 	{
-		// str.push_back('z');
 		r.push_back(str.substr(start, stop - start));
 		start = stop + 1;
 		stop = str.find_first_of(d, start);
@@ -28,35 +25,35 @@ std::vector<std::string> split(const std::string &str, char d)
 	return r;
 }
 
+bool compare(const std::vector<std::string> &ip1, const std::vector<std::string> &ip2) {
+	return std::lexicographical_compare(
+		ip1.begin(), ip1.end(), ip2.begin(), ip2.end(),
+		[](const auto s1, const auto s2) {
+			return std::stoi(s1) > std::stoi(s2);}); // we need inverse order
+}
+
 int main(int argc, char const *argv[])
 {
-	try
-	{
+	try {
 		std::vector<std::vector<std::string>> ip_pool;
 
 		for(std::string line; std::getline(std::cin, line);)
 		{
 			std::vector<std::string> v = split(line, '\t');
-
 			ip_pool.push_back(split(v.at(0), '.'));
 		}
 
-		// TODO reverse lexicographically sort
+		std::sort(ip_pool.begin(), ip_pool.end(), compare);
 
-		for(std::vector<std::vector<std::string>>::const_iterator ip = ip_pool.cbegin(); ip != ip_pool.cend(); ++ip)
-		{
-			for(std::vector<std::string>::const_iterator ip_part = ip->cbegin(); ip_part != ip->cend(); ++ip_part)
+		for(const auto ip : ip_pool) {
+			for(auto ip_part_it = ip.cbegin(); ip_part_it != ip.cend(); ++ip_part_it)
 			{
-				if (ip_part != ip->cbegin())
-				{
+				if (ip_part_it != ip.cbegin())
 					std::cout << ".";
-
-				}
-				std::cout << *ip_part;
+				std::cout << *ip_part_it;
 			}
 			std::cout << std::endl;
 		}
-
 		// 222.173.235.246
 		// 222.130.177.64
 		// 222.82.198.61
