@@ -3,12 +3,19 @@ dist: trusty
 
 addons:
   apt:
+    sources:
+      - ubuntu-toolchain-r-test
     packages:
       - libboost-test-dev
+      - g++-7
+# env:
+  # - CXX=g++-7
+  # - cc=gcc-7
 
 before_script:
   - mkdir build
   - cd build
+  - export CXX=g++-7
   - cmake ..
 script:
   - make
