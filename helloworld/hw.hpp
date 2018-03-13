@@ -2,7 +2,8 @@
 #define HW_H
 
 #include "version.hpp"
+#include <string>
 
-int version();
+std::string version();
 
 #endif /* HW_H */

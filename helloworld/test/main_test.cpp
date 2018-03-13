@@ -8,5 +8,5 @@
 
 BOOST_AUTO_TEST_CASE(version_test)
 {
-	BOOST_REQUIRE(version() > 0);
+	BOOST_REQUIRE(version() > "0.0.0");
 }

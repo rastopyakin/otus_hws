@@ -1,6 +1,6 @@
 #include "hw.hpp"
 
-int version()
+std::string version()
 {
-	return PROJECT_VERSION_PATCH;
+	return PROJECT_VERSION;
 }
