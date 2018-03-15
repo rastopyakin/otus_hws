@@ -4,7 +4,7 @@ project(ip_filter VERSION 0.1.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(ip_filter main.cpp)
+add_executable(ip_filter main.cpp ip_filter.cpp)
 
 
 install(TARGETS ip_filter
@@ -24,6 +24,6 @@ add_custom_target(deploy-${PROJECT_NAME}
 
 add_dependencies(deploy deploy-${PROJECT_NAME})
 
-# enable_testing()
+enable_testing()
 
-# add_subdirectory(test)
+add_subdirectory(test)
