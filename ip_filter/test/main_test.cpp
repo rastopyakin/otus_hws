@@ -24,14 +24,14 @@ BOOST_AUTO_TEST_CASE(split_test)
 
 BOOST_AUTO_TEST_CASE(match_test)
 {
-    BOOST_REQUIRE(match(ip_t({2, 0, 3}), 2));
-    BOOST_REQUIRE(!match(ip_t({1, 2, 3}), 2));
-    BOOST_REQUIRE(match(ip_t({1, 2, 3}), 1, 2));
-    BOOST_REQUIRE(match(ip_t({1, 2, 3}), 1, 2));
-    BOOST_REQUIRE(!match(ip_t({0, 2, 3}), 1, 2));
+    BOOST_REQUIRE(match(ip_t{2, 0, 3, 0}, 2));
+    BOOST_REQUIRE(!match(ip_t{1, 2, 3, 0}, 2));
+    BOOST_REQUIRE(match(ip_t{1, 2, 3, 10}, 1, 2));
+    BOOST_REQUIRE(match(ip_t{1, 2, 3, 5}, 1, 2));
+    BOOST_REQUIRE(!match(ip_t{0, 2, 3, 5}, 1, 2));
 }
 
 BOOST_AUTO_TEST_CASE(str2ip_test)
 {
-    BOOST_REQUIRE(str2ip("1.2.3.4") == ip_t({1, 2, 3, 4}));
+    BOOST_REQUIRE((str2ip("1.2.3.4") == ip_t{1, 2, 3, 4}));
 }

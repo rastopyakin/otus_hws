@@ -2,20 +2,24 @@
 #define IP_FILTER_HPP
 
 #include <vector>
+#include <array>
 #include <string>
 #include <algorithm>
 
-using ip_t = std::vector<int>;
+const int ip_length = 4;
+using ip_t = std::array<int, ip_length>;
 using ip_pool_t =  std::vector<ip_t>;
 
-inline bool match(const ip_t &ip) {
+template <int P>
+bool match(const ip_t &ip) {
+    static_assert(P <= ip_length, "too many arguments");
     return true;
 }
 
-template <typename T, typename... Args>
-bool match(const ip_t &ip, T val, Args... args) {
-    if (ip[0] == val)
-	return match(ip_t{ip.begin() + 1, ip.end()}, args...);
+template <int P = 0, typename T, typename... Remained>
+bool match(const ip_t &ip, T val, Remained... vals) {
+    if (ip[P] == val)
+	return match<P+1>(ip, vals...);
     else
 	return false;
 }

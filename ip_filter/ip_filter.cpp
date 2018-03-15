@@ -30,7 +30,8 @@ std::vector<std::string> split(const std::string &str, char d)
 ip_t str2ip(const std::string &s) {
     ip_t r;
     auto v = split(s, '.');
+    int ind = 0;
     for (const auto &ip_part : v)
-	r.push_back(std::stoi(ip_part));
+	r[ind++] = std::stoi(ip_part);
     return r;
 }
