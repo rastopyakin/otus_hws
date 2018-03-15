@@ -6,13 +6,8 @@
 
 void show_ips(const ip_pool_t &pool) {
     for(const auto &ip : pool) {
-	for(auto ip_part_it = ip.cbegin(); ip_part_it != ip.cend(); ++ip_part_it)
-	{
-	    if (ip_part_it != ip.cbegin())
-		std::cout << ".";
-	    std::cout << *ip_part_it;
-	}
-	std::cout << std::endl;
+	std::printf("%d.%d.%d.%d\n",
+		    ip[0], ip[1], ip[2], ip[3]);
     }
 }
 
