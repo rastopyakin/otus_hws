@@ -1,0 +1,1 @@
+Function bin_id(n) finds closest greater or equal number which is 2^n and returns n.

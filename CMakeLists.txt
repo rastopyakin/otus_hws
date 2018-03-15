@@ -7,5 +7,6 @@ add_custom_target(deploy
 
 add_subdirectory(helloworld)
 add_subdirectory(ip_filter)
+add_subdirectory(bin_id)
 
 enable_testing()
