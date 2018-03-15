@@ -5,7 +5,7 @@
 #include <string>
 #include <algorithm>
 
-using ip_t = std::vector<std::string>;
+using ip_t = std::vector<int>;
 using ip_pool_t =  std::vector<ip_t>;
 
 inline bool match(const ip_t &ip) {
@@ -29,8 +29,10 @@ ip_pool_t filter(const ip_pool_t &pool, Vals... vals) {
     return r;
 }
 
-ip_pool_t filter_any(const ip_pool_t &pool, std::string val);
+ip_pool_t filter_any(const ip_pool_t &pool, int val);
 
-ip_t split(const std::string &str, char d);
+std::vector<std::string> split(const std::string &str, char d);
+
+ip_t str2ip(const std::string &s);
 
 #endif /* IP_FILTER_HPP */

@@ -1,6 +1,6 @@
 #include "ip_filter.hpp"
 
-ip_pool_t filter_any(const ip_pool_t &pool, std::string val) {
+ip_pool_t filter_any(const ip_pool_t &pool, int val) {
     ip_pool_t r {};
 
     for (const auto &ip: pool) {
@@ -10,9 +10,9 @@ ip_pool_t filter_any(const ip_pool_t &pool, std::string val) {
     return r;
 }
 
-ip_t split(const std::string &str, char d)
+std::vector<std::string> split(const std::string &str, char d)
 {
-    ip_t r;
+    std::vector<std::string>  r;
 
     std::string::size_type start = 0;
     std::string::size_type stop = str.find_first_of(d);
@@ -24,5 +24,13 @@ ip_t split(const std::string &str, char d)
     }
 
     r.push_back(str.substr(start));
+    return r;
+}
+
+ip_t str2ip(const std::string &s) {
+    ip_t r;
+    auto v = split(s, '.');
+    for (const auto &ip_part : v)
+	r.push_back(std::stoi(ip_part));
     return r;
 }
