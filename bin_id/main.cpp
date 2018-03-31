@@ -21,6 +21,8 @@ static_assert(bin_id(4) == 2, "");
 static_assert(bin_id(7) == 3, "");
 static_assert(bin_id(8) == 3, "");
 static_assert(bin_id(9) == 4, "");
+static_assert(bin_id(63) == 6, "");
+static_assert(bin_id(64) == 6, "");
 static_assert(bin_id(1023) == 10, "");
 static_assert(bin_id(1024) == 10, "");
 static_assert(bin_id(1025) == 11, "");
