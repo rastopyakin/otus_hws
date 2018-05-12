@@ -25,6 +25,9 @@ int main(int argc, char *argv[])
     for (int i = 0; i < N; i++)
 	l.push_front(i);
 
+    for (const auto &p: l)
+	std::printf("%d\n", p);
+
     std::printf("the end!\n");
     return 0;
 }
