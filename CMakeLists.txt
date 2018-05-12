@@ -9,5 +9,6 @@ add_subdirectory(helloworld)
 add_subdirectory(ip_filter)
 add_subdirectory(bin_id)
 add_subdirectory(timus)
+add_subdirectory(allocator)
 
 enable_testing()
