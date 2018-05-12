@@ -2,6 +2,8 @@
 #include <map>
 #include <cassert>
 
+#include "list.hpp"
+
 template <class T>
 constexpr T factorial(T i) {
     assert(i >= 0);
@@ -10,7 +12,7 @@ constexpr T factorial(T i) {
 
 int main(int argc, char *argv[])
 {
-    const int N = 10;
+    const int N = 3;
     std::map<int, int> m;
     for (int i = 0; i < N; i++)
 	m.insert(std::make_pair(i, factorial(i)));
@@ -19,6 +21,9 @@ int main(int argc, char *argv[])
       std::printf("%d %d\n", p.first, p.second);
     }
 
+    tsk::list<int> l;
+    for (int i = 0; i < N; i++)
+	l.push_front(i);
 
     std::printf("the end!\n");
     return 0;
