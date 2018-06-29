@@ -3,6 +3,7 @@
 #include <cassert>
 
 #include "list.hpp"
+#include "allocator.hpp"
 
 template <class T>
 constexpr T factorial(T i) {
