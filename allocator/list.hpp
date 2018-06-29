@@ -10,6 +10,8 @@ namespace tsk {
 	struct node {
 	    node(T && data_, node* next_) :
 		next(next_), data(std::move(data_)) {}
+	    node(const T & data_, node* next_) :
+		next(next_), data(data_) {}
 	    node *next;
 	    T data;
 	};
@@ -50,7 +52,11 @@ namespace tsk {
 	    a.construct(new_head, std::move(data), head);
 	    head = new_head;
 	}
-
+	void push_front(const T & data) {
+	    auto new_head = a.allocate(1);
+	    a.construct(new_head, data, head);
+	    head = new_head;
+	}
 	~list() {
 	    for (node *p = head; p != nullptr; ) {
 		p = head->next;
