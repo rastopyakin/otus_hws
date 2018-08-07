@@ -4,6 +4,7 @@
 
 #include "list.hpp"
 #include "allocator.hpp"
+#include "log.hpp"
 
 template <class T>
 constexpr T factorial(T i) {
@@ -14,7 +15,17 @@ constexpr T factorial(T i) {
 int main(int argc, char *argv[])
 {
     const int N = 10;
+    std::cout << "Test everything!\n";
 
+    Log lv {"lv: "};
+    tsk::list<Log> log_list;
+    log_list.push_front(lv);
+    log_list.push_front(Log{"rv: "});
+
+    for (const auto & v : log_list)
+        v.show();
+
+    std::cout << "\n<<<<\n";
     std::map<int, int> m;
     for (int i = 0; i < N; i++)
         m.insert(std::make_pair(i, factorial(i)));
@@ -37,5 +48,6 @@ int main(int argc, char *argv[])
     for (const auto &p: lc)
         std::printf("%d\n", p);
 
+    std::cout << "\nthe end\n";
     return 0;
 }
