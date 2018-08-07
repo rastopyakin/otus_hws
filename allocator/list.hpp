@@ -3,6 +3,8 @@
 
 #include <memory>
 #include <utility>
+#include <iostream>
+
 namespace tsk {
     template <class T, class Allocator = std::allocator<T>>
     class list {
@@ -46,12 +48,14 @@ namespace tsk {
 
         template <class U>
         void push_front(U && data) {
+            std::cout << "universal push_front " << __PRETTY_FUNCTION__ << std::endl;
             auto new_head = a.allocate(1);
             a.construct(new_head, std::forward<U>(data), head);
             head = new_head;
         }
 
         void push_front(T && data) {
+            std::cout << "rvalue push_front " << __PRETTY_FUNCTION__ << std::endl;
             // node *new_head = new node;
             auto new_head = a.allocate(1);
 
@@ -61,6 +65,7 @@ namespace tsk {
             head = new_head;
         }
         void push_front(const T & data) {
+            std::cout << "lvalue push_front " << __PRETTY_FUNCTION__ << std::endl;
             auto new_head = a.allocate(1);
             a.construct(new_head, data, head);
             head = new_head;

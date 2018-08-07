@@ -17,9 +17,11 @@ int main(int argc, char *argv[])
     const int N = 10;
     std::cout << "Test everything!\n";
 
+    const Log clv {"clv: "};
     Log lv {"lv: "};
     tsk::list<Log> log_list;
     log_list.push_front(lv);
+    log_list.push_front(clv);
     log_list.push_front(Log{"rv: "});
 
     for (const auto & v : log_list)
