@@ -43,6 +43,14 @@ namespace tsk {
         iterator end() {
             return iterator{nullptr};
         }
+
+        template <class U>
+        void push_front(U && data) {
+            auto new_head = a.allocate(1);
+            a.construct(new_head, std::forward<U>(data), head);
+            head = new_head;
+        }
+
         void push_front(T && data) {
             // node *new_head = new node;
             auto new_head = a.allocate(1);
