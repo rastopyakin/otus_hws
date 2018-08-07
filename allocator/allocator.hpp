@@ -8,7 +8,7 @@ template <class T, int capacity>
 struct pool {
     std::array<unsigned char, capacity*sizeof(T)> chunk;
     auto & operator[](std::size_t ind) {
-	return chunk[ind*sizeof(T)];
+        return chunk[ind*sizeof(T)];
     }
 };
 
@@ -19,7 +19,7 @@ public:
 
     template <class U>
     struct rebind {
-	using other  = reserving_allocator<U, capacity>;
+        using other  = reserving_allocator<U, capacity>;
     };
 
     reserving_allocator() = default;
@@ -28,23 +28,23 @@ public:
     reserving_allocator(const reserving_allocator<U, N> &a) {}
 
     T* allocate(std::size_t n) {
-	if ((n_elem + n) > capacity*pools.size()) {
-	    pools.emplace_back();
-	}
+        if ((n_elem + n) > capacity*pools.size()) {
+            pools.emplace_back();
+        }
 
-	int pool_num = n_elem/capacity;
-	int ind = n_elem%capacity;
-	n_elem += n;
+        int pool_num = n_elem/capacity;
+        int ind = n_elem%capacity;
+        n_elem += n;
 
-	return reinterpret_cast<T*>(&pools[pool_num][ind]);
+        return reinterpret_cast<T*>(&pools[pool_num][ind]);
     }
     void deallocate(T* p, std::size_t n) {}
     template <class U, class ... Args>
     void construct(U* p, Args&& ... args) {
-	new(p) U(std::forward<Args>(args) ...);
+        new(p) U(std::forward<Args>(args) ...);
     }
     void destroy(T* p) {
-	p->~T();
+        p->~T();
     }
 private:
     int n_elem = 0;
