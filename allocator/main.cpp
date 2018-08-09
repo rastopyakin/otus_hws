@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
     log_list.push_front(lv);
     log_list.push_front(clv);
     log_list.push_front(Log{"rv: "});
+    log_list.emplace_back("in_pls: ");
 
     for (const auto & v : log_list)
         v.show();
@@ -36,7 +37,7 @@ int main(int argc, char *argv[])
     for (int i = 0; i < N; i++)
         mc.insert(std::make_pair(i, factorial(i)));
     for (const auto &p : mc) {
-      std::printf("%d %d\n", p.first, p.second);
+        std::printf("%d %d\n", p.first, p.second);
     }
 
     tsk::list<int> l;
