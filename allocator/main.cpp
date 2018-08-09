@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     for (int i = 0; i < N; i++)
         mc.insert(std::make_pair(i, factorial(i)));
     for (const auto &p : mc) {
-      std::printf("%d %d\n", p.first, p.second);
+        std::printf("%d %d\n", p.first, p.second);
     }
 
     tsk::list<int> l;

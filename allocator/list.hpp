@@ -8,10 +8,9 @@ namespace tsk {
     class list {
     private:
         struct node {
-            node(T && data_, node* next_) :
-                next(next_), data(std::move(data_)) {}
-            node(const T & data_, node* next_) :
-                next(next_), data(data_) {}
+            template<class... Args>
+            node(node* next_, Args&& ... args) :
+                next(next_), data(std::forward<Args>(args)...) {}
             node *next;
             T data;
         };
@@ -47,7 +46,14 @@ namespace tsk {
         template <class U>
         void push_front(U && data) {
             auto new_head = a.allocate(1);
-            a.construct(new_head, std::forward<U>(data), head);
+            a.construct(new_head, head, std::forward<U>(data));
+            head = new_head;
+        }
+
+        template<class ... Args>
+        void emplace_back(Args&& ... args) {
+            auto new_head = a.allocate(1);
+            a.construct(new_head, head, std::forward<Args>(args)...);
             head = new_head;
         }
 
