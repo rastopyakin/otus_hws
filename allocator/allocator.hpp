@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <array>
+#include <iostream>
 
 template <class T, int capacity>
 struct pool {
@@ -30,20 +31,25 @@ public:
     T* allocate(std::size_t n) {
         if ((n_elem + n) > capacity*pools.size()) {
             pools.emplace_back();
+            std::printf("new pool\n");
         }
 
+        std::printf("allocate(%lu)\n", n);
         int pool_num = n_elem/capacity;
         int ind = n_elem%capacity;
         n_elem += n;
 
         return reinterpret_cast<T*>(&pools[pool_num][ind]);
+        std::printf("pool_num = %d, ind = %d, n_elem = %d\n", pool_num, ind, n_elem);
     }
     void deallocate(T* p, std::size_t n) {}
     template <class U, class ... Args>
     void construct(U* p, Args&& ... args) {
+        // std::cout << __PRETTY_FUNCTION__ << std::endl;
         new(p) U(std::forward<Args>(args) ...);
     }
     void destroy(T* p) {
+        // std::cout << __PRETTY_FUNCTION__ << std::endl;
         p->~T();
     }
 private:

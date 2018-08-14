@@ -1,6 +1,7 @@
 #include <iostream>
-#include <map>
-#include <cassert>
+#include <string>
+#include <forward_list>
+#include <vector>
 
 #include "list.hpp"
 #include "allocator.hpp"
@@ -14,42 +15,25 @@ constexpr T factorial(T i) {
 
 int main(int argc, char *argv[])
 {
-    const int N = 10;
+    const int N = 5;
     std::cout << "Test everything!\n";
 
-    const Log clv {"clv: "};
-    Log lv {"lv: "};
-    tsk::list<Log> log_list;
-    log_list.push_front(lv);
-    log_list.push_front(clv);
-    log_list.push_front(Log{"rv: "});
-    log_list.emplace_back("in_pls: ");
+    std::cout << std::endl;
+    std::vector<Log> logs_v;
+    // logs_v.emplace_back(Log{"x: "});
+    for (int i = 0; i < 3; i++)
+        logs_v.emplace_back(std::to_string(i) + "_v: ");
+    for (const auto &p : logs_v)
+        p.show();
 
-    for (const auto & v : log_list)
-        v.show();
+    std::cout << std::endl;
 
-    std::cout << "\n<<<<\n";
-    std::map<int, int> m;
+    tsk::list<Log, reserving_allocator<Log, 3>> lc;
     for (int i = 0; i < N; i++)
-        m.insert(std::make_pair(i, factorial(i)));
-
-    std::map<int, int, std::less<int>, reserving_allocator<std::pair<int, int>, N>> mc;
-    for (int i = 0; i < N; i++)
-        mc.insert(std::make_pair(i, factorial(i)));
-    for (const auto &p : mc) {
-        std::printf("%d %d\n", p.first, p.second);
-    }
-
-    tsk::list<int> l;
-    for (int i = 0; i < N; i++)
-        l.push_front(i);
-
-    tsk::list<int, reserving_allocator<int, N>> lc;
-    for (int i = 0; i < N; i++)
-        lc.push_front(i);
+        lc.emplace_back(std::to_string(i) + ": ");
 
     for (const auto &p: lc)
-        std::printf("%d\n", p);
+        p.show();
 
     std::cout << "\nthe end\n";
     return 0;
