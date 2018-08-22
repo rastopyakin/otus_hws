@@ -1,7 +1,7 @@
 #ifndef ALLOCATOR_HPP
 #define ALLOCATOR_HPP
 
-#include <vector>
+#include <forward_list>
 #include <array>
 #include <iostream>
 
@@ -29,18 +29,18 @@ public:
     reserving_allocator(const reserving_allocator<U, N> &a) {}
 
     T* allocate(std::size_t n) {
-        if ((n_elem + n) > capacity*pools.size()) {
-            pools.emplace_back();
+        if ((n_elem + n) > capacity*n_pools) {
+            n_pools++;
+            pools.emplace_front();
             std::printf("new pool\n");
         }
-
         std::printf("allocate(%lu)\n", n);
         int pool_num = n_elem/capacity;
         int ind = n_elem%capacity;
         n_elem += n;
 
-        return reinterpret_cast<T*>(&pools[pool_num][ind]);
         std::printf("pool_num = %d, ind = %d, n_elem = %d\n", pool_num, ind, n_elem);
+        return reinterpret_cast<T*>(&pools.front()[ind]);
     }
     void deallocate(T* p, std::size_t n) {}
     template <class U, class ... Args>
@@ -54,7 +54,8 @@ public:
     }
 private:
     int n_elem = 0;
-    std::vector<pool<T, capacity>> pools;
+    std::size_t n_pools = 0;
+    std::forward_list<pool<T, capacity>> pools;
 };
 
 
