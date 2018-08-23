@@ -5,10 +5,17 @@
 #include <array>
 
 template <class T, int capacity>
-struct pool {
+class pool {
     std::array<unsigned char, capacity*sizeof(T)> chunk;
-    auto & operator[](std::size_t ind) {
-        return chunk[ind*sizeof(T)];
+    std::size_t n_elem = 0;
+public:
+    T* allocate(std::size_t n) {
+        std::size_t ind = n_elem;
+        n_elem += n;
+        return reinterpret_cast<T*>(&chunk[ind*sizeof(T)]);
+    }
+    std::size_t elems_available() {
+        return capacity - n_elem;
     }
 };
 
@@ -28,16 +35,11 @@ public:
     reserving_allocator(const reserving_allocator<U, N> &a) {}
 
     T* allocate(std::size_t n) {
-        if ((n_elem + n) > capacity*n_pools) {
-            n_pools++;
+        if (pools.empty() or pools.front().elems_available() < n) {
             pools.emplace_front();
         }
 
-        // int pool_num = n_elem/capacity;
-        int ind = n_elem%capacity;
-        n_elem += n;
-
-        return reinterpret_cast<T*>(&pools.front()[ind]);
+        return pools.front().allocate(n);
     }
     void deallocate(T* p, std::size_t n) {}
     template <class U, class ... Args>
@@ -48,8 +50,6 @@ public:
         p->~T();
     }
 private:
-    int n_elem = 0;
-    std::size_t n_pools = 0;
     std::forward_list<pool<T, capacity>> pools;
 };
 
