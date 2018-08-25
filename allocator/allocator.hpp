@@ -3,6 +3,7 @@
 
 #include <forward_list>
 #include <array>
+#include <cassert>
 
 template <class T, int capacity>
 class pool {
@@ -10,6 +11,7 @@ class pool {
     std::size_t n_elem = 0;
 public:
     T* allocate(std::size_t n) {
+        assert(n <= capacity);
         std::size_t ind = n_elem;
         n_elem += n;
         return reinterpret_cast<T*>(&chunk[ind*sizeof(T)]);

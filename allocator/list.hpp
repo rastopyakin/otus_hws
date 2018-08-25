@@ -51,7 +51,7 @@ namespace tsk {
         }
 
         template<class ... Args>
-        void emplace_back(Args&& ... args) {
+        void emplace_front(Args&& ... args) {
             auto new_head = a.allocate(1);
             a.construct(new_head, head, std::forward<Args>(args)...);
             head = new_head;
