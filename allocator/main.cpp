@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     new(&p2[1]) Log{"p2[1]: "};
     p2[0].show(); p2[1].show();
 
-    auto p3 = a.allocate(5);
+    auto p3 = a.allocate(1);
     std::printf("p3 = %p\n", p3);
     new(&p3[0]) Log{"p3[0]: "};
     p3->show();
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 
     tsk::list<Log, reserving_allocator<Log, 3>> lc;
     for (int i = 0; i < N; i++)
-        lc.emplace_back(std::to_string(i) + ": ");
+        lc.emplace_front(std::to_string(i) + ": ");
 
     for (const auto &p: lc)
         p.show();
