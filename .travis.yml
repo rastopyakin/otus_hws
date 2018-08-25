@@ -1,6 +1,10 @@
 language: cpp
 dist: trusty
 
+branches:
+  only:
+    - master
+
 addons:
   apt:
     sources:
@@ -16,7 +20,7 @@ before_script:
   - mkdir build
   - cd build
   - export CXX=g++-7
-  - cmake ..
+  - cmake .. -DCMAKE_BUILD_TYPE=Release
 script:
   - make
   - make test

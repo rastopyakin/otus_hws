@@ -1,14 +1,23 @@
 #ifndef ALLOCATOR_HPP
 #define ALLOCATOR_HPP
 
-#include <vector>
+#include <forward_list>
 #include <array>
+#include <cassert>
 
 template <class T, int capacity>
-struct pool {
+class pool {
     std::array<unsigned char, capacity*sizeof(T)> chunk;
-    auto & operator[](std::size_t ind) {
-	return chunk[ind*sizeof(T)];
+    std::size_t n_elem = 0;
+public:
+    T* allocate(std::size_t n) {
+        assert(n <= capacity);
+        std::size_t ind = n_elem;
+        n_elem += n;
+        return reinterpret_cast<T*>(&chunk[ind*sizeof(T)]);
+    }
+    std::size_t elems_available() {
+        return capacity - n_elem;
     }
 };
 
@@ -19,7 +28,7 @@ public:
 
     template <class U>
     struct rebind {
-	using other  = reserving_allocator<U, capacity>;
+        using other  = reserving_allocator<U, capacity>;
     };
 
     reserving_allocator() = default;
@@ -28,27 +37,22 @@ public:
     reserving_allocator(const reserving_allocator<U, N> &a) {}
 
     T* allocate(std::size_t n) {
-	if ((n_elem + n) > capacity*pools.size()) {
-	    pools.emplace_back();
-	}
+        if (pools.empty() or pools.front().elems_available() < n) {
+            pools.emplace_front();
+        }
 
-	int pool_num = n_elem/capacity;
-	int ind = n_elem%capacity;
-	n_elem += n;
-
-	return reinterpret_cast<T*>(&pools[pool_num][ind]);
+        return pools.front().allocate(n);
     }
     void deallocate(T* p, std::size_t n) {}
     template <class U, class ... Args>
     void construct(U* p, Args&& ... args) {
-	new(p) U(std::forward<Args>(args) ...);
+        new(p) U(std::forward<Args>(args) ...);
     }
     void destroy(T* p) {
-	p->~T();
+        p->~T();
     }
 private:
-    int n_elem = 0;
-    std::vector<pool<T, capacity>> pools;
+    std::forward_list<pool<T, capacity>> pools;
 };
 
 

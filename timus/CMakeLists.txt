@@ -18,9 +18,20 @@ add_executable(t1545 t1545.cpp)
 add_executable(t1496 t1496.cpp)
 add_executable(t1196 t1196.cpp)
 add_executable(t1837 t1837.cpp)
+add_executable(t1820 t1820.cpp)
+add_executable(t1197 t1197.cpp)
+add_executable(t2066 t2066.cpp)
+add_executable(t1880 t1880.cpp)
+add_executable(t1639 t1639.cpp)
+add_executable(t1910 t1910.cpp)
+add_executable(t1924 t1924.cpp)
+add_executable(t2023 t2023.cpp)
+add_executable(t2100 t2100.cpp)
+add_executable(t1209 t1209.cpp)
 
 install(TARGETS
-  t1000 t1001 t1785 t1293 t2012 t1409 t1877 t2001 t1264 t1787 t1545 t1496 t1196 t1837
+  t1000 t1001 t1785 t1293 t2012 t1409 t1877 t2001 t1264 t1787 t1545 t1496 t1196 t1837 t2066 t1639
+  t1820 t1197 t1880 t1910 t1924 t2023 t2100 t1209
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib)
 
