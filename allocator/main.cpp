@@ -18,14 +18,23 @@ int main(int argc, char *argv[])
     const int N = 5;
     std::cout << "Test everything!\n";
 
-    std::cout << std::endl;
-    std::vector<Log> logs_v;
-    // logs_v.emplace_back(Log{"x: "});
-    for (int i = 0; i < 3; i++)
-        logs_v.emplace_back(std::to_string(i) + "_v: ");
-    for (const auto &p : logs_v)
-        p.show();
+    reserving_allocator<Log, 3> a;
+    auto p1 = a.allocate(2);
+    std::printf("p1 = %p\n", p1);
+    new(&p1[0]) Log{"p1[0]: "};
+    new(&p1[1]) Log{"p1[1]: "};
+    p1[0].show(); p1[1].show();
 
+    auto p2 = a.allocate(2);
+    std::printf("p2 = %p\n", p2);
+    new(&p2[0]) Log{"p2[0]: "};
+    new(&p2[1]) Log{"p2[1]: "};
+    p2[0].show(); p2[1].show();
+
+    auto p3 = a.allocate(5);
+    std::printf("p3 = %p\n", p3);
+    new(&p3[0]) Log{"p3[0]: "};
+    p3->show();
     std::cout << std::endl;
 
     tsk::list<Log, reserving_allocator<Log, 3>> lc;

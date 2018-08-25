@@ -3,6 +3,7 @@
 
 #include <forward_list>
 #include <array>
+#include <cassert>
 #include <iostream>
 
 template <class T, int capacity>
@@ -11,6 +12,7 @@ class pool {
     std::size_t n_elem = 0;
 public:
     T* allocate(std::size_t n) {
+        assert(n <= capacity);
         std::size_t ind = n_elem;
         n_elem += n;
         return reinterpret_cast<T*>(&chunk[ind*sizeof(T)]);
@@ -38,16 +40,15 @@ public:
     T* allocate(std::size_t n) {
         if (pools.empty() or pools.front().elems_available() < n) {
             pools.emplace_front();
+            n_pools++;
             std::printf("new pool\n");
         }
-        std::printf("allocate(%lu)\n", n);
-        int pool_num = n_elem/capacity;
-        int ind = n_elem%capacity;
         n_elem += n;
 
-        std::printf("pool_num = %d, ind = %d, n_elem = %lu\n", pool_num, ind, n_elem);
+        std::printf("pool_num = %lu, rest_elems = %lu, n_elem = %lu\n",
+                    n_pools, pools.front().elems_available(), n_elem);
 
-
+        std::printf("allocate(%lu)\n", n);
         return pools.front().allocate(n);
     }
     void deallocate(T* p, std::size_t n) {}
@@ -62,6 +63,7 @@ public:
     }
 private:
     std::size_t n_elem = 0;
+    std::size_t n_pools = 0;
     std::forward_list<pool<T, capacity>> pools;
 };
 
