@@ -24,6 +24,16 @@ private:
     bool is_first = true;
 };
 
+template<class T>
+std::enable_if_t<!std::is_same<T, char>::value and !std::is_same<T, int8_t>::value>
+print_byte(T ip_part) {
+    std::cout << ip_part;
+}
+
+void print_byte(byte_t byte) {
+    std::cout << static_cast<uint16_t>(byte);
+}
+
 template <class T>
 std::enable_if_t<std::is_integral<T>::value>
 print_ip(T val) {
@@ -31,7 +41,7 @@ print_ip(T val) {
     dot_placer dp;
     const byte_t * p_val = reinterpret_cast<byte_t*>(&val);
     for (std::size_t i = 0; i < n_bytes; i++) {
-        std::cout << dp(static_cast<uint16_t>(p_val[i]));
+        print_byte(dp(p_val[i]));
     }
     std::cout << std::endl;
 }
@@ -65,14 +75,15 @@ template <std::size_t ind, class ... Ts>
 struct print_tuple {
     static void as_ip(const std::tuple<Ts...> &t) {
         print_tuple<ind-1, Ts...>::as_ip(t);
-        std::cout << '.' << std::get<ind>(t);
+        std::cout << '.';
+        print_byte(std::get<ind>(t));
     }
 };
 
 template<class ... Ts>
 struct print_tuple<0, Ts...> {
     static void as_ip(const std::tuple<Ts...> &t) {
-        std::cout << std::get<0>(t);
+        print_byte(std::get<0>(t));
     }
 };
 
@@ -92,9 +103,9 @@ int main(int argc, char *argv[])
     print_ip("127.0.0.1");
 
     std::vector<int> v {87, 250, 250, 242};
-    std::list<int> l {64, 233, 164, 139};
+    std::list<int> l {164, 233, 164, 139};
     print_ip(v);
     print_ip(l);
-    auto t = std::make_tuple(80, 87, 192, 10);
+    auto t = std::make_tuple(80, "87", long(192), char(10));
     print_ip(t);
 }
