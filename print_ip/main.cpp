@@ -9,14 +9,29 @@
 
 using byte_t = uint8_t;
 
+class dot_placer {
+public:
+    template<class T>
+    auto operator()(T&& pass_me) {
+        if (!is_first)
+            std::cout << '.';
+        else
+            is_first = false;
+        return std::forward<T>(pass_me);
+    }
+
+private:
+    bool is_first = true;
+};
+
 template <class T>
 std::enable_if_t<std::is_integral<T>::value>
 print_ip(T val) {
     constexpr std::size_t n_bytes = sizeof(val);
-
+    dot_placer dp;
     const byte_t * p_val = reinterpret_cast<byte_t*>(&val);
     for (std::size_t i = 0; i < n_bytes; i++) {
-        std::cout << static_cast<uint16_t>(p_val[i]) << '.';
+        std::cout << dp(static_cast<uint16_t>(p_val[i]));
     }
     std::cout << std::endl;
 }
@@ -36,27 +51,15 @@ constexpr bool is_iterable_v = is_iterable<T>::value;
 
 template<class T>
 std::enable_if_t<is_iterable_v<T>> print_ip(T container) {
+    dot_placer dp;
     for (auto i : container)
-        std::cout << i << '.';
+        std::cout << dp(i);
     std::cout << std::endl;
 }
 
 void print_ip(std::string val) {
     std::cout << val << std::endl;
 }
-
-template <class T, class ... Tail>
-struct splitter {};
-
-template <class T, class ... Tail>
-struct splitter<std::tuple<T, Tail...>> {
-
-    static constexpr auto split(T head, Tail ... tail) {
-
-        std::cout << __PRETTY_FUNCTION__ << std::endl;
-        return 9;
-    }
-};
 
 template <std::size_t ind, class ... Ts>
 struct print_tuple {
