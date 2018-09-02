@@ -47,14 +47,14 @@ print_ip(T val) {
 }
 
 template<class, class = void>
-struct is_iterable {
-    static const bool value = false;
-};
+struct is_iterable : std::false_type {};
 
 template<class T>
-struct is_iterable<T, decltype(std::declval<T>().begin(), std::declval<T>().end(), void())> {
-    static const bool value = true;
-};
+struct is_iterable<T,
+                   decltype(std::declval<T>().begin(),
+                            std::declval<T>().end(),
+                            void())>
+    : std::true_type {};
 
 template <class T>
 constexpr bool is_iterable_v = is_iterable<T>::value;
