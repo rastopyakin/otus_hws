@@ -41,7 +41,7 @@ print_ip(T val) {
     dot_placer dp;
     const byte_t * p_val = reinterpret_cast<byte_t*>(&val);
     for (std::size_t i = 0; i < n_bytes; i++) {
-        print_byte(dp(p_val[i]));
+        print_byte(dp(p_val[n_bytes-i - 1]));
     }
     std::cout << std::endl;
 }
