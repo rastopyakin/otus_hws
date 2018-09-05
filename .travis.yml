@@ -29,15 +29,13 @@ script:
   - make docs
 
 deploy:
-  provider: script
-  skip_cleanup: true
-  script: make deploy
+  - provider: script
+    skip_cleanup: true
+    script: make deploy
+  - provider: pages
+    skip-cleanup: true
+    keep-history: true
+    github-token: $GH_REPO_TOKEN
+    local-dir: docs
   on:
     branch: master
-
-deploy:
-  provider: pages
-  skip-cleanup: true
-  keep-history: true
-  github-token: $GH_REPO_TOKEN
-  local-dir: docs
