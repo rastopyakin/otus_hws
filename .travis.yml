@@ -30,12 +30,10 @@ script:
 
 deploy:
   - provider: script
-    skip_cleanup: true
+    skip-cleanup: true
     script: make deploy
   - provider: pages
     skip-cleanup: true
     keep-history: true
     github-token: $GH_REPO_TOKEN
     local-dir: docs
-  on:
-    branch: master
