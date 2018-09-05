@@ -1,0 +1,6 @@
+The function printing IP-address for almost any type of argument
+
+* any integral type
+* strings
+* vector & list
+* tuple

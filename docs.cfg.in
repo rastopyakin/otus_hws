@@ -1,0 +1,7 @@
+PROJECT_NAME           = "@PROJECT_NAME@"
+
+OUTPUT_DIRECTORY       = "@CMAKE_CURRENT_BINARY_DIR@/../docs/"
+INPUT                  = "@PROJECT_SOURCE_DIR@"
+
+GENERATE_LATEX         = NO
+USE_MDFILE_AS_MAINPAGE = main_doc.md

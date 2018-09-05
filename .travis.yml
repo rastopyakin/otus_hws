@@ -12,6 +12,8 @@ addons:
     packages:
       - libboost-test-dev
       - g++-7
+      - doxygen
+      - graphviz
 # env:
   # - CXX=g++-7
   # - cc=gcc-7
@@ -24,6 +26,7 @@ before_script:
 script:
   - make
   - make test
+  - make docs
 
 deploy:
   provider: script
@@ -31,3 +34,10 @@ deploy:
   script: make deploy
   on:
     branch: master
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  keep-history: true
+  github-token: $GH_REPO_TOKEN
+  local-dir: ../docs
