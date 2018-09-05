@@ -24,5 +24,6 @@ add_subdirectory(bin_id)
 add_subdirectory(timus)
 add_subdirectory(allocator)
 add_subdirectory(print_ip)
+add_subdirectory(editor)
 
 enable_testing()
