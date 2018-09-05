@@ -13,7 +13,10 @@ add_custom_target(docs
 
 add_custom_command(OUTPUT
   ${CMAKE_CURRENT_BINARY_DIR}/../docs/html/index.html
-  COMMAND doxygen docs.cfg)
+  COMMAND
+  doxygen docs.cfg
+  COMMAND
+  cp ${CMAKE_SOURCE_DIR}/index.html ${CMAKE_SOURCE_DIR}/docs)
 
 add_subdirectory(helloworld)
 add_subdirectory(ip_filter)
