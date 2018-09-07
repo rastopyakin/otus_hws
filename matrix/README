@@ -1,0 +1,6 @@
+Sparse matrix class
+
+* stores only assigned elements
+* default value assignment frees the matrix cell
+* counter of occupied cells
+* matrix can look through all occupied cells returning cell's position and value

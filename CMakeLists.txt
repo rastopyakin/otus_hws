@@ -22,5 +22,6 @@ add_subdirectory(timus)
 add_subdirectory(allocator)
 add_subdirectory(print_ip)
 add_subdirectory(editor)
+add_subdirectory(matrix)
 
 enable_testing()
