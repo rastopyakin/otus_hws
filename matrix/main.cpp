@@ -32,6 +32,12 @@ int main(int argc, char *argv[]) {
     vec[19] = -3;
     std::cout << "vec[3] = " << vec[3] << std::endl;
 
+    for (auto c : vec) {
+        ind_t ind;
+        int v;
+        std::tie(ind, v) = c;
+        std::cout << ind << " " << v << std::endl;
+    }
     std::cout << vec.size() << std::endl;
     return 0;
 }

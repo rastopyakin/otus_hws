@@ -35,7 +35,7 @@ public:
         }
         return *this;
     }
-    operator T () {
+    operator T () const {
         return m_val;
     }
 private:
@@ -60,6 +60,12 @@ public:
     void store(cell_type * cell) {
         cells.insert(std::make_pair(index_candidate, *cell));
         std::cout << "vec[" << index_candidate << "] = " << *cell << " is stored\n";
+    }
+    auto begin() {
+        return cells.begin();
+    }
+    auto end() {
+        return cells.end();
     }
 private:
     std::map<ind_t, cell_type> cells;
