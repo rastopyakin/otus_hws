@@ -6,24 +6,6 @@
 #include <map>
 #include <vector>
 
-template<class T, T def_val>
-class Cell {
-public:
-    Cell & operator=(T val) {
-        if (val != def_val) {
-            m_val = val;
-        }
-
-        return *this;
-    }
-    operator T () {
-        return m_val;
-    }
-private:
-    T m_val = def_val;
-};
-
-
 using ind_t = std::size_t;
 
 template<class T, T def_val, ind_t n_dim>
@@ -41,12 +23,51 @@ private:
 };
 
 template<class T, T def_val>
+class Cell {
+public:
+    using parent_type = MatrixNdim<T, def_val, 1>;
+    Cell(parent_type *parent) : m_parent(parent) {}
+
+    Cell & operator=(T val) {
+        if (val != def_val) {
+            m_val = val;
+            m_parent->store(this);
+        }
+        return *this;
+    }
+    operator T () {
+        return m_val;
+    }
+private:
+    T m_val = def_val;
+    parent_type * m_parent;
+};
+
+template<class T, T def_val>
 class MatrixNdim<T, def_val, 1> {
 public:
-    T operator[] (ind_t ind) {
-        return 0;
+    using cell_type = Cell<T, def_val>;
+    cell_type operator[] (ind_t ind) {
+        auto result = cells.find(ind);
+        if (result != cells.end())
+            return result->second;
+        index_candidate = ind;
+        return Cell<T, def_val> {this};
     }
+    auto size() {
+        return cells.size();
+    }
+    void store(cell_type * cell) {
+        cells.insert(std::make_pair(index_candidate, *cell));
+        std::cout << "vec[" << index_candidate << "] = " << *cell << " is stored\n";
+    }
+private:
+    std::map<ind_t, cell_type> cells;
+    ind_t index_candidate;
 };
+
+template<class T, T def_val>
+using Vector = MatrixNdim<T, def_val, 1>;
 
 
 template<class T, T def_val>
