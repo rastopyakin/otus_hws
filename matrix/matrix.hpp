@@ -30,11 +30,11 @@ public:
             }
             return *this;
         }
-        auto& operator*() const {
-            return *child;
+        auto operator*() const {
+            ind_t ind = m_internal->first;
+            return std::tuple_cat(std::make_tuple(ind), *child);
         }
         bool operator!=(const iterator &other) const {
-            // std::cout << "!= \n";
             return m_internal != other.m_internal;
         }
     private:

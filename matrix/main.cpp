@@ -21,17 +21,20 @@ void test_cube() {
     cube[0][1][50] = -13; cube[23][3][1] = 111; cube[23][3][2] = 7;
 
     std::cout << "cube size: " << cube.size() << std::endl;
-    // auto ic = cube.begin();
+    auto ic = cube.begin();
     // std::cout << "ic->second " << (*ic).second << std::endl;
-    // ++ic;
-    // std::cout << "not_end: " << (ic != cube.end())<< "\n";
+    ++ic;
+    std::cout << "not_end: " << (ic != cube.end())<< "\n";
     // std::cout << "ic->second " << (*ic).second << std::endl;
-    // ++ic;
-    // std::cout << "not_end: " << (ic != cube.end())<< "\n";
+    ++ic;
+    std::cout << "not_end: " << (ic != cube.end())<< "\n";
     // std::cout << "begin->second " << (*ic).second << std::endl;
+    int i, j, k, v;
+    for (auto c : cube) {
+        std::tie(i, j, k, v) = c;
+        std::cout << i << ", " << j << ", " << k << ", " << v << std::endl;
+    }
 
-    for (auto c : cube)
-        std::cout << c.second << std::endl;
 }
 
 void test_matrix() {
@@ -46,8 +49,12 @@ void test_matrix() {
     matrix[7][7] = 11;
     std::cout << "matrix size: " << matrix.size() << std::endl;
 
-    for (auto c : matrix)
-        std::cout << c.second << std::endl;
+    int i, j, v;
+    for (auto c : matrix) {
+        std::tie(i, j, v) = c;
+        std::cout << i << ", " << j << ", " << v << std::endl;
+    }
+
 }
 
 void test_vector() {
