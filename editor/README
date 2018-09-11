@@ -1,0 +1,8 @@
+Vector graphics editor prototype
+
+Requirements:
+* New file
+* Import from a file
+* Export to a file
+* Graphic primitive creation
+* Deletion
