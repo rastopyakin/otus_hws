@@ -7,42 +7,47 @@
 #include "matrix.hpp"
 
 void test_cube() {
-    Cube<int, 11> cube;
+    Cube<int, 0> cube;
     std::cout << cube.size() << std::endl;
 
     std::cout << cube[2][3][4] << std::endl;
     cube[2][3][4] = 77;
     std::cout << cube[2][3][4] << std::endl;
 
-    std::cout << cube[2][3][0] << std::endl;
-    cube[2][2][0] = 44;
-    std::cout << cube[2][3][0] << std::endl;
+    std::cout << cube[1][2][0] << std::endl;
+    cube[1][2][0] = 44;
+    std::cout << cube[1][2][0] << std::endl;
+
+    cube[0][1][50] = -13; cube[23][3][1] = 111; cube[23][3][2] = 7;
+
     std::cout << "cube size: " << cube.size() << std::endl;
-    auto ic = cube.begin();
-    // std::cout << "begin->second " << ic->second << std::endl;
-    // ic++;
-    // std::cout << "is_end: " << (ic == cube.end())<< "\n";
-    // std::cout << "begin->second " << ic->second << std::endl;
+    // auto ic = cube.begin();
+    // std::cout << "ic->second " << (*ic).second << std::endl;
+    // ++ic;
+    // std::cout << "not_end: " << (ic != cube.end())<< "\n";
+    // std::cout << "ic->second " << (*ic).second << std::endl;
+    // ++ic;
+    // std::cout << "not_end: " << (ic != cube.end())<< "\n";
+    // std::cout << "begin->second " << (*ic).second << std::endl;
+
+    for (auto c : cube)
+        std::cout << c.second << std::endl;
 }
 
 void test_matrix() {
     Matrix<int, 3> matrix;
 
-    std::cout << matrix.size() << std::endl;
-
-    std::cout << matrix[2][4] << std::endl;
-    matrix[2][4] = 100500;
-    std::cout << matrix[2][4] << std::endl;
+    std::cout << matrix[1][4] << std::endl;
+    matrix[1][4] = 100500;
+    std::cout << matrix[1][4] << std::endl;
 
     matrix[2][17] = 23;
-
+    matrix[3][7] = -111;
+    matrix[7][7] = 11;
     std::cout << "matrix size: " << matrix.size() << std::endl;
 
-    auto it = matrix.begin();
-    // std::cout << "begin->second " << it->second << std::endl;
-    // it++;
-    // std::cout << "is_end: " << (it == matrix.end())<< "\n";
-    // std::cout << "begin->second " << it->second << std::endl;
+    for (auto c : matrix)
+        std::cout << c.second << std::endl;
 }
 
 void test_vector() {
@@ -72,12 +77,12 @@ void test_vector() {
 
 int main(int argc, char *argv[]) {
 
-    test_vector();
+    // test_vector();
     std::cout << "----------\n";
 
-    // test_matrix();
-    // std::cout << "----------\n";
+    test_matrix();
+    std::cout << "----------\n";
 
-    // test_cube();
+    test_cube();
     return 0;
 }

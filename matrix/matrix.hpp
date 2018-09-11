@@ -13,27 +13,40 @@ class MatrixNdim {
 public:
     using child_type = MatrixNdim<T, def_val, n_dim-1>;
     using parent_type = MatrixNdim<T, def_val, n_dim+1>;
+    using iterator_type = typename std::map<ind_t, child_type>::iterator;
 
     MatrixNdim(parent_type * parent=nullptr) : m_parent(parent) {}
 
     class iterator {
     public:
-        iterator& operator++() {
+        using child_iterator_type = typename child_type::iterator;
+        iterator(iterator_type it)
+            : m_internal(it), child(it->second.begin()) {}
+        auto& operator++() {
+            ++child;
+            if (not (child != m_internal->second.end())) {
+                m_internal++;
+                child = m_internal->second.begin();
+            }
             return *this;
         }
-        child_type& operator*() {
-            return 0;
+        auto& operator*() const {
+            return *child;
         }
-        bool operator!=(const iterator &other) {
-            return true;
+        bool operator!=(const iterator &other) const {
+            // std::cout << "!= \n";
+            return m_internal != other.m_internal;
         }
+    private:
+        iterator_type m_internal;
+        child_iterator_type child;
     };
 
     auto begin() {
-        return childs.begin()->second.begin();
+        return iterator{childs.begin()};
     }
     auto end() {
-        return childs.begin()->second.end();
+        return iterator{childs.end()};
     }
 
     std::size_t size() const {
@@ -116,11 +129,11 @@ public:
 
             return *this;
         }
-        auto operator*() {
+        auto& operator*() const {
             return *m_internal;
         }
-        bool operator!=(const iterator &other) {
-            m_internal != other.m_internal;
+        bool operator!=(const iterator &other) const {
+            return m_internal != other.m_internal;
         }
     private:
         iterator_type m_internal;
