@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
     std::cout << cube[1][0][0] << std::endl;
     cube[1][0][0] = 44;
     std::cout << cube[1][0][0] << std::endl;
+    std::cout << "cube size: " << cube.size() << std::endl;
 
     std::cout << "----------\n";
     Matrix<int, 3> matrix;
@@ -29,6 +30,8 @@ int main(int argc, char *argv[]) {
     std::cout << matrix[2][4] << std::endl;
 
     matrix[11][17] = 23;
+
+    std::cout << "matrix size: " << matrix.size() << std::endl;
 
     std::cout << "----------\n";
     Vector<int, 4> vec;

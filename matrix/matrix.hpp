@@ -16,7 +16,10 @@ public:
 
     MatrixNdim(parent_type * parent=nullptr) : m_parent(parent) {}
     std::size_t size() const {
-        return 0;
+        std::size_t result = 0;
+        for (const auto& child : childs)
+            result += child.second.size();
+        return result;
     }
     child_type operator[] (ind_t ind) {
         auto result = childs.find(ind);
@@ -71,7 +74,7 @@ public:
         index_candidate = ind;
         return Cell<T, def_val> {this};
     }
-    auto size() {
+    auto size() const {
         return cells.size();
     }
     void store(cell_type * cell) {
