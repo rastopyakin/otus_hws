@@ -20,8 +20,8 @@ public:
     class iterator {
     public:
         using child_iterator_type = typename child_type::iterator;
-        iterator(iterator_type it)
-            : m_internal(it), child(it->second.begin()) {}
+        iterator(iterator_type it, child_iterator_type ch_it)
+            : m_internal(it), child(ch_it) {}
         auto& operator++() {
             ++child;
             if (not (child != m_internal->second.end())) {
@@ -43,10 +43,10 @@ public:
     };
 
     auto begin() {
-        return iterator{childs.begin()};
+        return iterator{childs.begin(), childs.begin()->second.begin()};
     }
     auto end() {
-        return iterator{childs.end()};
+        return iterator{childs.end(), childs.begin()->second.end()};
     }
 
     std::size_t size() const {
