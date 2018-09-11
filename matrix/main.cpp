@@ -6,9 +6,7 @@
 
 #include "matrix.hpp"
 
-int main(int argc, char *argv[]) {
-
-
+void test_cube() {
     Cube<int, 11> cube;
     std::cout << cube.size() << std::endl;
 
@@ -17,23 +15,37 @@ int main(int argc, char *argv[]) {
     std::cout << cube[2][3][4] << std::endl;
 
     std::cout << cube[2][3][0] << std::endl;
-    cube[2][3][0] = 44;
+    cube[2][2][0] = 44;
     std::cout << cube[2][3][0] << std::endl;
     std::cout << "cube size: " << cube.size() << std::endl;
+    auto ic = cube.begin();
+    // std::cout << "begin->second " << ic->second << std::endl;
+    // ic++;
+    // std::cout << "is_end: " << (ic == cube.end())<< "\n";
+    // std::cout << "begin->second " << ic->second << std::endl;
+}
 
-    std::cout << "----------\n";
+void test_matrix() {
     Matrix<int, 3> matrix;
+
     std::cout << matrix.size() << std::endl;
 
     std::cout << matrix[2][4] << std::endl;
     matrix[2][4] = 100500;
     std::cout << matrix[2][4] << std::endl;
 
-    matrix[11][17] = 23;
+    matrix[2][17] = 23;
 
     std::cout << "matrix size: " << matrix.size() << std::endl;
 
-    std::cout << "----------\n";
+    auto it = matrix.begin();
+    // std::cout << "begin->second " << it->second << std::endl;
+    // it++;
+    // std::cout << "is_end: " << (it == matrix.end())<< "\n";
+    // std::cout << "begin->second " << it->second << std::endl;
+}
+
+void test_vector() {
     Vector<int, 4> vec;
     std::cout << "vec[4] = " <<  vec[4] << std::endl;
 
@@ -56,5 +68,16 @@ int main(int argc, char *argv[]) {
         std::cout << ind << " " << v << std::endl;
     }
     std::cout << vec.size() << std::endl;
+}
+
+int main(int argc, char *argv[]) {
+
+    test_vector();
+    std::cout << "----------\n";
+
+    // test_matrix();
+    // std::cout << "----------\n";
+
+    // test_cube();
     return 0;
 }

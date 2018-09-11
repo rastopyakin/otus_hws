@@ -15,6 +15,27 @@ public:
     using parent_type = MatrixNdim<T, def_val, n_dim+1>;
 
     MatrixNdim(parent_type * parent=nullptr) : m_parent(parent) {}
+
+    class iterator {
+    public:
+        iterator& operator++() {
+            return *this;
+        }
+        child_type& operator*() {
+            return 0;
+        }
+        bool operator!=(const iterator &other) {
+            return true;
+        }
+    };
+
+    auto begin() {
+        return childs.begin()->second.begin();
+    }
+    auto end() {
+        return childs.begin()->second.end();
+    }
+
     std::size_t size() const {
         std::size_t result = 0;
         for (const auto& child : childs)
@@ -66,7 +87,10 @@ class MatrixNdim<T, def_val, 1> {
 public:
     using parent_type = MatrixNdim<T, def_val, 2>;
     using cell_type = Cell<T, def_val>;
+    using iterator_type = typename std::map<ind_t, cell_type>::iterator;
+
     MatrixNdim(parent_type *parent=nullptr) : m_parent(parent) {}
+
     cell_type operator[] (ind_t ind) {
         auto result = cells.find(ind);
         if (result != cells.end())
@@ -83,11 +107,29 @@ public:
             m_parent->store(this);
         std::cout << index_candidate << ": " << *cell << " is stored\n";
     }
+
+    class iterator {
+    public:
+        iterator(iterator_type it) : m_internal(it) {}
+        iterator& operator++() {
+            m_internal++;
+
+            return *this;
+        }
+        auto operator*() {
+            return *m_internal;
+        }
+        bool operator!=(const iterator &other) {
+            m_internal != other.m_internal;
+        }
+    private:
+        iterator_type m_internal;
+    };
     auto begin() {
-        return cells.begin();
+        return iterator{cells.begin()};
     }
     auto end() {
-        return cells.end();
+        return iterator{cells.end()};
     }
 private:
     std::map<ind_t, cell_type> cells;
@@ -105,7 +147,6 @@ public:
 
 template<class T, T def_val>
 using Vector = MatrixNdim<T, def_val, 1>;
-
 
 template<class T, T def_val>
 using Matrix = MatrixNdim<T, def_val, 2>;
