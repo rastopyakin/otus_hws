@@ -56,10 +56,10 @@ public:
         return result;
     }
     child_type operator[] (ind_t ind) {
+        index_candidate = ind;
         auto result = childs.find(ind);
         if (result != childs.end())
             return result->second;
-        index_candidate = ind;
         return child_type {this};
     }
     void store(child_type * child) {
@@ -104,10 +104,10 @@ public:
     MatrixNdim(parent_type *parent=nullptr) : m_parent(parent) {}
 
     cell_type operator[] (ind_t ind) {
+        index_candidate = ind;
         auto result = cells.find(ind);
         if (result != cells.end())
             return result->second;
-        index_candidate = ind;
         return Cell<T, def_val> {this};
     }
     auto size() const {
