@@ -29,7 +29,7 @@ public:
         return child_type {this};
     }
     void store(child_type * child) {
-        childs.insert(std::make_pair(index_candidate, *child));
+        childs.insert_or_assign(index_candidate, *child);
         if (m_parent != nullptr)
             m_parent->store(this);
         std::cout << index_candidate << ",";
@@ -78,7 +78,7 @@ public:
         return cells.size();
     }
     void store(cell_type * cell) {
-        cells.insert(std::make_pair(index_candidate, *cell));
+        cells.insert_or_assign(index_candidate, *cell);
         if (m_parent != nullptr)
             m_parent->store(this);
         std::cout << index_candidate << ": " << *cell << " is stored\n";

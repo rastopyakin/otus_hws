@@ -16,9 +16,9 @@ int main(int argc, char *argv[]) {
     cube[2][3][4] = 77;
     std::cout << cube[2][3][4] << std::endl;
 
-    std::cout << cube[1][0][0] << std::endl;
-    cube[1][0][0] = 44;
-    std::cout << cube[1][0][0] << std::endl;
+    std::cout << cube[2][3][0] << std::endl;
+    cube[2][3][0] = 44;
+    std::cout << cube[2][3][0] << std::endl;
     std::cout << "cube size: " << cube.size() << std::endl;
 
     std::cout << "----------\n";
