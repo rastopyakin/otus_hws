@@ -67,6 +67,14 @@ public:
         if (m_parent != nullptr)
             m_parent->store(this);
     }
+    void erase(child_type * child) {
+        if (child->size() != 0)
+            childs.insert_or_assign(index_candidate, *child);
+        else
+            childs.erase(index_candidate);
+        if (m_parent != nullptr)
+            m_parent->erase(this);
+    }
 private:
     std::map<ind_t, child_type> childs;
     ind_t index_candidate;
@@ -77,9 +85,11 @@ template<class T, T def_val>
 class Cell {
 public:
     using parent_type = MatrixNdim<T, def_val, 1>;
-    Cell(parent_type *parent) : m_parent(parent) {}
+    explicit Cell(parent_type *parent) : m_parent(parent) {}
 
     Cell & operator=(T val) {
+        if (val == def_val)
+            m_parent->erase();
         if (val != def_val) {
             m_val = val;
             m_parent->store(this);
@@ -112,6 +122,11 @@ public:
     }
     auto size() const {
         return cells.size();
+    }
+    void erase() {
+        cells.erase(index_candidate);
+        if (m_parent != nullptr)
+            m_parent->erase(this);
     }
     void store(cell_type * cell) {
         cells.insert_or_assign(index_candidate, *cell);
@@ -154,6 +169,7 @@ class MatrixNdim<T, def_val, 5> {
 public:
     using child_type = MatrixNdim<T, def_val, 4>;
     void store(child_type *) {}
+    void erase(child_type *) {}
 };
 
 template<class T, T def_val>
