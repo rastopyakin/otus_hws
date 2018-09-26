@@ -8,6 +8,8 @@
 
 using ind_t = std::size_t;
 
+constexpr ind_t max_dim = 5;
+
 template<class T, T def_val, ind_t n_dim>
 class MatrixNdim {
 public:
@@ -165,7 +167,7 @@ private:
 
 // inifinite instantiation ceiling
 template<class T, T def_val>
-class MatrixNdim<T, def_val, 5> {
+class MatrixNdim<T, def_val, max_dim> {
 public:
     using child_type = MatrixNdim<T, def_val, 4>;
     void store(child_type *) {}
