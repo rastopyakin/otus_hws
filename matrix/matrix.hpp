@@ -69,6 +69,7 @@ public:
         std::cout << index_candidate << ",";
     }
     void erase(child_type * child) {
+        std::cout << "erase() level: " << n_dim << std::endl;
         if (child->size() != 0)
             childs.insert_or_assign(index_candidate, *child);
         else
@@ -87,15 +88,15 @@ class Cell {
 public:
     using parent_type = MatrixNdim<T, def_val, 1>;
     explicit Cell(parent_type *parent) : m_parent(parent) {}
-
-    Cell & operator=(T val) {
+    ~Cell() {std::cout << m_val << ":" << this << ": died\n";}
+    void operator=(T val) {
         if (val == def_val)
             m_parent->erase();
         if (val != def_val) {
             m_val = val;
             m_parent->store(this);
         }
-        return *this;
+        // return *this;
     }
     operator T () const {
         return m_val;
@@ -119,13 +120,16 @@ public:
         auto result = cells.find(ind);
         if (result != cells.end())
             return result->second;
+        std::cout << "new cell made, " << "parent: " << this << std::endl;
         return Cell<T, def_val> {this};
     }
     auto size() const {
         return cells.size();
     }
     void erase() {
-        cells.erase(index_candidate);
+        std::cout << "erase()-----\n";
+        std::cout << cells.erase(index_candidate);
+        std::cout << " cells at " << index_candidate << " erased\n";
         if (m_parent != nullptr)
             m_parent->erase(this);
     }
@@ -133,7 +137,7 @@ public:
         cells.insert_or_assign(index_candidate, *cell);
         if (m_parent != nullptr)
             m_parent->store(this);
-        std::cout << index_candidate << ": " << *cell << " is stored\n";
+        std::cout << index_candidate << ": " << *cell << ":" << cell << " is stored, parent :" << this << std::endl;
     }
 
     class iterator {
