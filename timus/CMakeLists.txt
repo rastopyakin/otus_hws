@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(timus VERSION 0.1.2 LANGUAGES CXX)
+project(timus VERSION 0.1.3 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -28,10 +28,21 @@ add_executable(t1924 t1924.cpp)
 add_executable(t2023 t2023.cpp)
 add_executable(t2100 t2100.cpp)
 add_executable(t1209 t1209.cpp)
+add_executable(t1567 t1567.cpp)
+add_executable(t1319 t1319.cpp)
+add_executable(t1225 t1225.cpp)
+add_executable(t1068 t1068.cpp)
+add_executable(t1313 t1313.cpp)
+add_executable(t1100 t1100.cpp)
+add_executable(t1991 t1991.cpp)
+add_executable(t1263 t1263.cpp)
+add_executable(t1585 t1585.cpp)
+add_executable(t1581 t1581.cpp)
 
 install(TARGETS
   t1000 t1001 t1785 t1293 t2012 t1409 t1877 t2001 t1264 t1787 t1545 t1496 t1196 t1837 t2066 t1639
-  t1820 t1197 t1880 t1910 t1924 t2023 t2100 t1209
+  t1820 t1197 t1880 t1910 t1924 t2023 t2100 t1209 t1567 t1319 t1225 t1068 t1313 t1100 t1991 t1263
+  t1585 t1581
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib)
 
