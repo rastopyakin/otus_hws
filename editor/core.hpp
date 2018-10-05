@@ -1,7 +1,6 @@
 #ifndef CORE_HPP
 #define CORE_HPP
 
-#include "view.hpp"
 #include "figure.hpp"
 
 #include <list>
@@ -21,7 +20,8 @@ public:
                                    [pos](const auto& fig) -> bool {
                                        return pos == fig->getPos();
                                    });
-        figures.erase(result);
+        if (result != figures.end())
+            figures.erase(result);
     }
     void newDoc() {}
     void saveDoc() {}

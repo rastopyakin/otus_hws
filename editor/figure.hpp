@@ -18,6 +18,7 @@ private:
 
 class Triangle : public Figure {
 public:
+    Triangle(position_t pos) : Figure(pos) {}
     void render() const override {
         std::cout << "\tTriangle: " << getPos() << std::endl;
     }
@@ -25,8 +26,9 @@ public:
 
 class Circle : public Figure {
 public:
+    Circle(position_t pos) : Figure(pos) {}
     void render() const override {
-        std::cout << "\t Circle:" << getPos() << std::endl;
+        std::cout << "\tCircle:" << getPos() << std::endl;
     }
 };
 #endif /* FIGURE_HPP */
