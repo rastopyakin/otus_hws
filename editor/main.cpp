@@ -17,10 +17,12 @@ int main(int argc, char *argv[]) {
     ConsoleView view {&core};
     core.setView(&view);
 
+    core.newDoc("file_1");
     core.addFig(std::make_unique<Triangle>(0));
     core.addFig(std::make_unique<Circle>(1));
 
     core.removeFig(0);
 
+    core.newDoc("file_2");
     return 0;
 }

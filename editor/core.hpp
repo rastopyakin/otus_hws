@@ -26,12 +26,19 @@ public:
             figures.erase(result);
         view->render();
     }
-    void newDoc() {}
+    void newDoc(std::string name) {
+        figures.clear();
+        file_name = name;
+        view->render();
+    }
     void saveDoc() {}
     void openDoc() {}
 
     const figures_t& getFigures() const {
         return figures;
+    }
+    auto getFileName() const {
+        return file_name;
     }
 
     void setView(View *p) {
