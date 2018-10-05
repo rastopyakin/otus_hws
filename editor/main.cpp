@@ -14,16 +14,16 @@ void removeFig() {}
 
 int main(int argc, char *argv[]) {
     EditorCore core;
-    View *view = new WorkSheet(&core);
+    EditorView view {&core};
 
     core.addFig(std::make_unique<Triangle>(0));
     core.addFig(std::make_unique<Circle>(1));
 
-    view->render();
+    view.render();
 
     core.removeFig(0);
 
-    view->render();
+    view.render();
 
     return 0;
 }
