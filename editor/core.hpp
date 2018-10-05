@@ -2,6 +2,7 @@
 #define CORE_HPP
 
 #include "figure.hpp"
+#include "view.hpp"
 
 #include <list>
 #include <string>
@@ -14,6 +15,7 @@ public:
     using figures_t = std::list<figure_p_t>;
     void addFig(figure_p_t fig) {
         figures.push_back(std::move(fig));
+        view->render();
     }
     void removeFig(Figure::position_t pos) {
         auto result = std::find_if(figures.begin(), figures.end(),
@@ -22,6 +24,7 @@ public:
                                    });
         if (result != figures.end())
             figures.erase(result);
+        view->render();
     }
     void newDoc() {}
     void saveDoc() {}
@@ -30,9 +33,14 @@ public:
     const figures_t& getFigures() const {
         return figures;
     }
+
+    void setView(View *p) {
+        view = p;
+    }
 private:
     figures_t figures;
     std::string file_name;
+    View *view;
 };
 
 #endif /* CORE_HPP */
