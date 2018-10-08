@@ -27,11 +27,15 @@ void openFile(EditorCore* core) {
     file.close();
 }
 
-
 void saveFile(EditorCore* core) {
     std::fstream file;
     file.open(core->getFileName(), std::ios::out);
     for (const auto& fig : core->getFigures())
         fig->render(file);
     file.close();
+}
+
+void closeFile(EditorCore* core) {
+    saveFile(core);
+    core->newDoc("");
 }

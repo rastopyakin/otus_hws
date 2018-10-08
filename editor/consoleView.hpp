@@ -68,6 +68,8 @@ public:
         buttons.back().addSlot(std::bind(openFile, core));
         buttons.emplace_back("saveFile", isFileOpened);
         buttons.back().addSlot(std::bind(saveFile, core));
+        buttons.emplace_back("closeFile", isFileOpened);
+        buttons.back().addSlot(std::bind(closeFile, core));
         buttons.emplace_back("addFigure", isFileOpened);
         buttons.emplace_back("removeFigure", isFileOpened);
     }

@@ -12,6 +12,10 @@ void addFig() {}
 void removeFig() {}
 
 int main(int argc, char *argv[]) {
+
+    std::string s = "";
+    std::cout << s.size() << std::endl;
+
     EditorCore core;
     ConsoleView view {&core};
     core.setView(&view);
@@ -27,7 +31,8 @@ int main(int argc, char *argv[]) {
 
     view.getToolBar()->getButton("saveFile")->clicked();
 
-    core.newDoc("file_2");
+    std::cout << "closing file...\n";
+    view.getToolBar()->getButton("closeFile")->clicked();
 
     view.getToolBar()->getButton("openFile")->clicked();
     return 0;

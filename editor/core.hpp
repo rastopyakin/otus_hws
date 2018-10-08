@@ -31,8 +31,6 @@ public:
         file_name = name;
         view->render();
     }
-    void saveDoc() {}
-    void openDoc() {}
 
     const figures_t& getFigures() const {
         return figures;

@@ -11,4 +11,6 @@ void openFile(EditorCore* core);
 
 void saveFile(EditorCore* core);
 
+void closeFile(EditorCore* core);
+
 #endif /* CONTROLLERS_HPP */
