@@ -8,6 +8,7 @@
 
 #include "view.hpp"
 #include "core.hpp"
+#include "controllers.hpp"
 
 class WorkSheet : public View {
 public:
@@ -62,9 +63,11 @@ public:
     ToolBar(EditorCore *core) {
         auto isFileOpened = [core]() {return core->getFileName().size();};
         buttons.emplace_back("newFile");
-        buttons.back().addSlot([] () {std::cout << "newFile clicked\n";});
+        buttons.back().addSlot(std::bind(newFile, core));
         buttons.emplace_back("openFile");
+        buttons.back().addSlot(std::bind(openFile, core));
         buttons.emplace_back("saveFile", isFileOpened);
+        buttons.back().addSlot(std::bind(saveFile, core));
         buttons.emplace_back("addFigure", isFileOpened);
         buttons.emplace_back("removeFigure", isFileOpened);
     }

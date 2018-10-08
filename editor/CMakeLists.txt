@@ -4,7 +4,7 @@ project(editor VERSION 0.0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(editor main.cpp)
+add_executable(editor main.cpp controllers.cpp)
 
 
 install(TARGETS editor
