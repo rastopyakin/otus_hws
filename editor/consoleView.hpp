@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <functional>
+#include <algorithm>
 
 #include "view.hpp"
 #include "core.hpp"
@@ -40,9 +41,15 @@ public:
         if (isActive())
             std::cout << m_name;
     }
+    void addSlot(const callback_t &slot) {
+        slots.push_back(slot);
+    }
     void clicked() const {
         for (const auto& slot : slots)
             slot();
+    }
+    const auto& getName() const {
+        return m_name;
     }
 private:
     std::string m_name;
@@ -55,6 +62,7 @@ public:
     ToolBar(EditorCore *core) {
         auto isFileOpened = [core]() {return core->getFileName().size();};
         buttons.emplace_back("newFile");
+        buttons.back().addSlot([] () {std::cout << "newFile clicked\n";});
         buttons.emplace_back("openFile");
         buttons.emplace_back("saveFile", isFileOpened);
         buttons.emplace_back("addFigure", isFileOpened);
@@ -68,6 +76,12 @@ public:
         }
         std::cout << std::endl;
     }
+    auto getButton(const std::string& name) const {
+        auto result = std::find_if(buttons.begin(), buttons.end(),
+                                   [&name](const auto& b) {
+                                       return b.getName() == name;});
+        return result;
+    }
 private:
     // EditorCore* core;
     std::vector<ActiveView> buttons;
@@ -77,16 +91,24 @@ class ConsoleView : public View {
 public:
     ConsoleView(EditorCore* p) {
         views.push_back(std::make_unique<FileNameView>(p));
+
         views.push_back(std::make_unique<ToolBar>(p));
+        toolBar_p = reinterpret_cast<ToolBar*>(views.back().get());
+
         views.push_back(std::make_unique<WorkSheet>(p));
+
     }
     void render() const override {
         for (const auto& v : views)
             v->render();
         std::cout << std::endl;
     }
+    const ToolBar* getToolBar() const {
+        return toolBar_p;
+    }
 private:
     std::vector<std::unique_ptr<View>> views;
+    ToolBar* toolBar_p;
 };
 
 #endif /* CONSOLEVIEW_HPP */
