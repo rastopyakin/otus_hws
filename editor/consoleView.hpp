@@ -15,7 +15,7 @@ public:
     void render() const override {
         std::cout << "worksheet:\n";
         for (const auto& fig : core->getFigures())
-            fig->render();
+            fig->render(std::cout);
     }
 private:
     EditorCore* core;
