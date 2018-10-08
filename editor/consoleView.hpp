@@ -62,6 +62,7 @@ class ToolBar : public View {
 public:
     ToolBar(EditorCore *core) {
         auto isFileOpened = [core]() {return core->getFileName().size();};
+        auto isFigureAdded = [core]() {return !core->getFigures().empty();};
         buttons.emplace_back("newFile");
         buttons.back().addSlot(std::bind(newFile, core));
         buttons.emplace_back("openFile");
@@ -71,7 +72,9 @@ public:
         buttons.emplace_back("closeFile", isFileOpened);
         buttons.back().addSlot(std::bind(closeFile, core));
         buttons.emplace_back("addFigure", isFileOpened);
-        buttons.emplace_back("removeFigure", isFileOpened);
+        buttons.back().addSlot(std::bind(addFigure, core));
+        buttons.emplace_back("removeFigure", isFigureAdded);
+        buttons.back().addSlot(std::bind(removeFigure, core));
     }
     void render() const override {
         std::cout << "Toolbar: ";

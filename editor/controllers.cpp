@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <random>
 
 void newFile(EditorCore* core) {
     // ask for a file name here
@@ -38,4 +39,24 @@ void saveFile(EditorCore* core) {
 void closeFile(EditorCore* core) {
     saveFile(core);
     core->newDoc("");
+}
+
+void addFigure(EditorCore* core) {
+    // ask for a figure here
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<> figChooser{0, 1};
+    std::uniform_int_distribution<> figPosChooser{0, 10};
+
+    switch (figChooser(gen)) {
+    case 0:
+        core->addFig(std::make_unique<Circle>(figPosChooser(gen)));
+        break;
+    case 1:
+        core->addFig(std::make_unique<Triangle>(figPosChooser(gen)));
+    }
+}
+
+void removeFigure(EditorCore* core) {
+    core->removeFig(core->getFigures().front()->getPos());
 }

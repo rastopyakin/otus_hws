@@ -13,4 +13,8 @@ void saveFile(EditorCore* core);
 
 void closeFile(EditorCore* core);
 
+void addFigure(EditorCore* core);
+
+void removeFigure(EditorCore* core);
+
 #endif /* CONTROLLERS_HPP */
