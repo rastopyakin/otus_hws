@@ -37,6 +37,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
       <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
@@ -67,7 +68,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -88,7 +89,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">main.cpp File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
+<div class="textblock"><code>#include &quot;<a class="el" href="core_8hpp_source.html">core.hpp</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="consoleView_8hpp_source.html">consoleView.hpp</a>&quot;</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for main.cpp:</div>
+<div class="dyncontent">
+<div class="center"><img src="main_8cpp__incl.png" border="0" usemap="#_2home_2travis_2build_2rastopyakin_2otus__hws_2editor_2main_8cpp" alt=""/></div>
+<map name="_2home_2travis_2build_2rastopyakin_2otus__hws_2editor_2main_8cpp" id="_2home_2travis_2build_2rastopyakin_2otus__hws_2editor_2main_8cpp">
+<area shape="rect" id="node2" href="core_8hpp.html" title="core.hpp" alt="" coords="139,259,211,285"/><area shape="rect" id="node11" href="consoleView_8hpp.html" title="consoleView.hpp" alt="" coords="246,109,367,136"/><area shape="rect" id="node3" href="figure_8hpp.html" title="figure.hpp" alt="" coords="317,333,395,360"/><area shape="rect" id="node5" href="view_8hpp.html" title="view.hpp" alt="" coords="217,333,291,360"/><area shape="rect" id="node13" href="controllers_8hpp.html" title="controllers.hpp" alt="" coords="97,184,204,211"/></map>
+</div>
+</div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
@@ -124,7 +134,7 @@ Functions</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Sep 29 2018 23:46:15 for editor by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 8 2018 13:53:54 for editor by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

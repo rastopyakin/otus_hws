@@ -1,0 +1,6 @@
+<map id="View" name="View">
+<area shape="rect" id="node2" href="$classConsoleView.html" title="ConsoleView" alt="" coords="5,80,104,107"/>
+<area shape="rect" id="node3" href="$classFileNameView.html" title="FileNameView" alt="" coords="128,80,235,107"/>
+<area shape="rect" id="node4" href="$classToolBar.html" title="ToolBar" alt="" coords="259,80,325,107"/>
+<area shape="rect" id="node5" href="$classWorkSheet.html" title="WorkSheet" alt="" coords="350,80,436,107"/>
+</map>
