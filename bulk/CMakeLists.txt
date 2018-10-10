@@ -5,7 +5,7 @@ project(bulk VERSION 0.0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(bulk main.cpp)
-
+add_executable(bulk_tester tester.cpp)
 
 install(TARGETS bulk
   RUNTIME DESTINATION bin
