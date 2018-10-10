@@ -5,7 +5,7 @@
 
 class Observer {
 public:
-    virtual void notify() const = 0;
+    virtual void notify() = 0;
 };
 
 class Observable {

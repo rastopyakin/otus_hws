@@ -21,7 +21,7 @@ public:
     ConsoleHandler(CommandCollector* p) : collector(p) {
         collector->subscribe(this);
     }
-    void notify() const override {
+    void notify() final {
         std::cout << "bulk: ";
         CommaPlacer cp;
         for (const auto& cmd : collector->getCmdList())
@@ -32,4 +32,22 @@ private:
     CommandCollector* collector;
 };
 
+class FileHandler : public Observer {
+public:
+    FileHandler(CommandCollector* p) : collector(p) {
+        collector->subscribe(this);
+    };
+    void notify() final {
+        file.open("bulk.log", std::ios::out | std::ios::app);
+        file << "bulk: ";
+        CommaPlacer cp;
+        for (const auto& cmd : collector->getCmdList())
+            file << cp << cmd;
+        file << std::endl;
+        file.close();
+    }
+private:
+    std::fstream file;
+    CommandCollector* collector;
+};
 #endif /* HANDLERS_HPP */

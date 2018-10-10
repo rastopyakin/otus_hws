@@ -13,7 +13,8 @@ int main(int argc, char *argv[]) {
     else std::cout << "Usage: bulk <number of commands in block>\n";
 
     CommandCollector collector {block_size};
-    ConsoleHandler console {&collector};
+    ConsoleHandler to_console {&collector};
+    FileHandler to_file {&collector};
     CommandCollector::command_t cmd;
     while (std::getline(std::cin, cmd)) {
         collector.gather(cmd);
