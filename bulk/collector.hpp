@@ -11,7 +11,7 @@ public:
     using command_t = std::string;
     CommandCollector(std::size_t N) : block_size(N) {}
     void gather(const command_t &cmd) {
-        if (getCurrentBlockSize() == 0)
+        if (cmd_list.empty())
             time_stamp = std::chrono::steady_clock::now();
 
         if (cmd == "{") {
@@ -28,13 +28,9 @@ public:
             cmd_list.push_back(cmd);
 
         // submit fixed size block if it's ready
-        if (getCurrentBlockSize()==block_size and dynamic_size_block_depth==0) {
+        if (cmd_list.size()==block_size and dynamic_size_block_depth==0) {
             flush();
         }
-    }
-
-    std::size_t getCurrentBlockSize() const {
-        return cmd_list.size();
     }
 
     const auto& getTimeStamp() const {
@@ -46,7 +42,7 @@ public:
     }
 
     void flush() {
-        if (dynamic_size_block_depth == 0 and getCurrentBlockSize() != 0)
+        if (dynamic_size_block_depth == 0 and !cmd_list.empty())
             notify_all();
         cmd_list.clear();
         dynamic_size_block_depth = 0;
