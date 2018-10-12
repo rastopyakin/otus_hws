@@ -1,11 +1,17 @@
 #ifndef HANDLERS_HPP
 #define HANDLERS_HPP
 
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <chrono>
+
 #include "observer.hpp"
+#include "collector.hpp"
 
 class CommaPlacer {
 public:
-    friend std::ostream& operator<<(std::ostream &os, CommaPlacer &cp) {
+    friend auto& operator<<(std::ostream &os, CommaPlacer &cp) {
         if (!cp.is_first)
             os << ", ";
         else
@@ -38,7 +44,11 @@ public:
         collector->subscribe(this);
     };
     void notify() final {
-        file.open("bulk.log", std::ios::out | std::ios::app);
+        auto time_stamp{
+            std::to_string(collector->getTimeStamp().time_since_epoch().count())
+        };
+        std::string file_name {"bulk" + time_stamp + ".log"};
+        file.open(file_name, std::ios::out | std::ios::app);
         file << "bulk: ";
         CommaPlacer cp;
         for (const auto& cmd : collector->getCmdList())
