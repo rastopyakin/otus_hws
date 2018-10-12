@@ -169,7 +169,7 @@ private:
 template<class T, T def_val>
 class MatrixNdim<T, def_val, max_dim> {
 public:
-    using child_type = MatrixNdim<T, def_val, 4>;
+    using child_type = MatrixNdim<T, def_val, max_dim-1>;
     void store(child_type *) {}
     void erase(child_type *) {}
 };
