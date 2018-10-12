@@ -2,6 +2,7 @@
 #define COLLECTOR_HPP
 
 #include <list>
+#include <string>
 #include <chrono>
 
 #include "observer.hpp"
