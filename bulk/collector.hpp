@@ -15,8 +15,7 @@ public:
             time_stamp = std::chrono::steady_clock::now();
         cmd_list.push_back(cmd);
         if (getCurrentBlockSize() == block_size) {
-            notify_all();
-            cmd_list.clear();
+            flush();
         }
     }
     std::size_t getCurrentBlockSize() {
@@ -29,6 +28,11 @@ public:
 
     const auto& getCmdList() const {
         return cmd_list;
+    }
+
+    void flush() {
+        notify_all();
+        cmd_list.clear();
     }
 private:
     std::chrono::time_point<std::chrono::steady_clock> time_stamp;

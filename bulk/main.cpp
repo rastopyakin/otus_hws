@@ -19,5 +19,7 @@ int main(int argc, char *argv[]) {
     while (std::getline(std::cin, cmd)) {
         collector.gather(cmd);
     }
+
+    collector.flush();
     return 0;
 }
