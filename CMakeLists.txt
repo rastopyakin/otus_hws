@@ -24,5 +24,6 @@ add_subdirectory(print_ip)
 add_subdirectory(editor)
 add_subdirectory(matrix)
 add_subdirectory(bulk)
+add_subdirectory(bulkmt)
 
 enable_testing()
