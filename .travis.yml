@@ -9,8 +9,9 @@ addons:
   apt:
     sources:
       - ubuntu-toolchain-r-test
+      - sourceline: 'ppa:mhier/libboost-latest'
     packages:
-      - libboost-test-dev
+      - libboost1.67-dev
       - g++-7
       - doxygen
       - graphviz
