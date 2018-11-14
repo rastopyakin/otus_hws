@@ -10,8 +10,10 @@ int main(int argc, char *argv[]) {
 
     if (argc == 2)
         block_size = std::stoi(argv[1]);
-    else std::cout << "Usage: bulk <number of commands in block>\n";
-
+    else {
+        std::cout << "Usage: bulk <number of commands in block>\n";
+        return 1;
+    }
     CommandCollector collector {block_size};
     ConsoleHandler to_console {&collector};
     FileHandler to_file {&collector};

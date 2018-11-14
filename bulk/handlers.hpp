@@ -47,6 +47,8 @@ public:
         auto time_stamp{
             std::to_string(collector->getTimeStamp().time_since_epoch().count())
         };
+        std::fstream file;
+
         std::string file_name {"bulk" + time_stamp + ".log"};
         file.open(file_name, std::ios::out | std::ios::app);
         file << "bulk: ";
@@ -57,7 +59,6 @@ public:
         file.close();
     }
 private:
-    std::fstream file;
     CommandCollector* collector;
 };
 #endif /* HANDLERS_HPP */
