@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <memory>
 
 class Observer {
 public:
@@ -13,10 +14,10 @@ public:
 class Observable {
 public:
     Observable() {}
-    void subscribe(Observer* observer) {
+    void subscribe(std::shared_ptr<Observer> observer) {
         observers.push_back(observer);
     }
-    void unsubscribe(const Observer* observer) {
+    void unsubscribe(std::shared_ptr<Observer> observer) {
         auto result = std::find(observers.begin(), observers.end(), observer);
         if (result != observers.end())
             observers.erase(result);
@@ -30,7 +31,7 @@ protected:
     }
 
 private:
-    std::vector<Observer*> observers;
+    std::vector<std::shared_ptr<Observer>> observers;
 };
 
 #endif /* OBSERVER_HPP */

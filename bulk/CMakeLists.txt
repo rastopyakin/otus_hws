@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.1)
 
-project(bulk VERSION 0.0.1 LANGUAGES CXX)
+project(bulk VERSION 0.0.2 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 
 add_executable(bulk main.cpp)
 add_executable(bulk_tester tester.cpp)
