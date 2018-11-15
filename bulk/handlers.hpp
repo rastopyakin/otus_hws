@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <chrono>
+#include <memory>
 
 #include "observer.hpp"
 #include "collector.hpp"
@@ -24,40 +25,37 @@ private:
 
 class ConsoleHandler : public Observer {
 public:
-    ConsoleHandler(CommandCollector* p) : collector(p) {
-        collector->subscribe(this);
-    }
+    ConsoleHandler(std::shared_ptr<CommandCollector> p) : collector(p) {}
     void notify() final {
         std::cout << "bulk: ";
         CommaPlacer cp;
-        for (const auto& cmd : collector->getCmdList())
+        for (const auto& cmd : collector.lock()->getCmdList())
             std::cout << cp << cmd;
         std::cout << std::endl;
     }
 private:
-    CommandCollector* collector;
+    std::weak_ptr<CommandCollector> collector;
 };
 
 class FileHandler : public Observer {
 public:
-    FileHandler(CommandCollector* p) : collector(p) {
-        collector->subscribe(this);
-    };
+    FileHandler(std::shared_ptr<CommandCollector> p) : collector(p) {};
     void notify() final {
         auto time_stamp{
-            std::to_string(collector->getTimeStamp().time_since_epoch().count())
+            std::to_string(collector.lock()->getTimeStamp().time_since_epoch().count())
         };
+        std::fstream file;
+
         std::string file_name {"bulk" + time_stamp + ".log"};
         file.open(file_name, std::ios::out | std::ios::app);
         file << "bulk: ";
         CommaPlacer cp;
-        for (const auto& cmd : collector->getCmdList())
+        for (const auto& cmd : collector.lock()->getCmdList())
             file << cp << cmd;
         file << std::endl;
         file.close();
     }
 private:
-    std::fstream file;
-    CommandCollector* collector;
+    std::weak_ptr<CommandCollector> collector;
 };
 #endif /* HANDLERS_HPP */
