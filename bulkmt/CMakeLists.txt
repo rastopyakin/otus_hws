@@ -4,8 +4,14 @@ project(bulkmt VERSION 0.0.1 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 
+find_package(Threads)
+
 add_executable(bulkmt main.cpp)
 add_executable(bulkmt_tester tester.cpp)
+add_executable(test_buffer buffer_test.cpp)
+
+target_link_libraries(bulkmt ${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(test_buffer ${CMAKE_THREAD_LIBS_INIT})
 
 install(TARGETS bulkmt
   RUNTIME DESTINATION bin
