@@ -13,6 +13,7 @@ class CommandCollector {
 public:
     using command_t = std::string;
     using command_block_t = std::list<command_t>;
+    using time_stamp_t = std::chrono::time_point<std::chrono::steady_clock>;
 
     CommandCollector(std::size_t N) : block_size(N) {}
 
@@ -53,6 +54,11 @@ public:
         cmd_block.clear();
         dynamic_size_block_depth = 0;
     }
+
+    const auto& getTimeStamp() const {
+        return time_stamp;
+    }
+
     Stat getStat() const {
         return stat;
     }
@@ -63,7 +69,7 @@ public:
 private:
     std::vector<std::shared_ptr<Subscriber>> subscribers;
     int dynamic_size_block_depth = 0;
-    std::chrono::time_point<std::chrono::steady_clock> time_stamp;
+    time_stamp_t time_stamp;
     std::size_t block_size;
     command_block_t cmd_block;
     Stat stat;
