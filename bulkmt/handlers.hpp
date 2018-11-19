@@ -83,27 +83,30 @@ public:
 
     auto getStat() {
         std::vector<std::future<Stat>> results;
-        std::transform(stat_promises.begin(), stat_promises.end(), std::back_inserter(results), [](auto &p) {return p.get_future();});
+        std::transform(stat_promises.begin(), stat_promises.end(),
+                       std::back_inserter(results),
+                       [](auto &p) {return p.get_future();});
         return results;
     }
 private:
     void worker(std::size_t id) {
         Stat stat;
+        std::string file_name_unique_part {std::to_string(id) + '_'};
         while (true) {
             auto block = buffer.pop_or_wait();
             if (!block)
                 break;
             stat.blocks_num++;
             stat.cmd_num += block->first.size();
-            process(*block, id);
+            process(*block, file_name_unique_part + std::to_string(stat.blocks_num) + '_');
         }
         std::lock_guard<std::mutex> lk{promises_lock};
         stat_promises[id].set_value(stat);
     }
-    void process(const cmd_block_descriptor &d, std::size_t id) const {
+    void process(const cmd_block_descriptor &d, std::string unique_part) const {
         std::fstream file;
         auto time_stamp = std::to_string(d.second.time_since_epoch().count());
-        std::string file_name {"bulk" + time_stamp + ".log"};
+        std::string file_name {"bulk" + unique_part + time_stamp + ".log"};
         file.open(file_name, std::ios::out | std::ios::app);
         file << "bulk: ";
         CommaPlacer cp;
