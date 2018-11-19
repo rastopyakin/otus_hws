@@ -7,6 +7,7 @@
 #include <list>
 
 #include "subscriber.hpp"
+#include "helpers.hpp"
 
 class CommandCollector {
 public:
@@ -42,14 +43,19 @@ public:
         subscribers.push_back(p);
     }
     void flush() {
-        if (dynamic_size_block_depth == 0 and !cmd_block.empty())
+        if (dynamic_size_block_depth == 0 and !cmd_block.empty()) {
+            stat.blocks_num++;
+            stat.cmd_num += cmd_block.size();
             for (auto &subscriber : subscribers)
                 subscriber->notify();
+        }
 
         cmd_block.clear();
         dynamic_size_block_depth = 0;
     }
-
+    Stat getStat() const {
+        return stat;
+    }
     command_block_t getCmdBlock() const {
         return cmd_block;
     }
@@ -60,6 +66,7 @@ private:
     std::chrono::time_point<std::chrono::steady_clock> time_stamp;
     std::size_t block_size;
     command_block_t cmd_block;
+    Stat stat;
 };
 
 #endif /* COLLECTOR_HPP */

@@ -3,23 +3,12 @@
 
 #include <iostream>
 #include <thread>
+#include <future>
 
 #include "subscriber.hpp"
 #include "collector.hpp"
 #include "buffer.hpp"
-
-class CommaPlacer {
-public:
-    friend auto& operator<<(std::ostream &os, CommaPlacer &cp) {
-        if (!cp.is_first)
-            os << ", ";
-        else
-            cp.is_first = false;
-        return os;
-    }
-private:
-    bool is_first = true;
-};
+#include "helpers.hpp"
 
 class ConsoleLogger : public Subscriber {
 public:
@@ -29,18 +18,25 @@ public:
     void notify() final {
         buffer.push(collector.lock()->getCmdBlock());
     }
+    std::future<Stat> getStat() {
+        return stat_promise.get_future();
+    }
     ~ConsoleLogger() {
         buffer.disable_waiting();
         worker_thread.join();
     }
 private:
     void worker() {
+        Stat stat;
         while (true) {
             auto block = buffer.pop_or_wait();
             if (!block)
                 break;
+            stat.blocks_num++;
+            stat.cmd_num += block->size();
             process(*block);
         }
+        stat_promise.set_value(stat);
     }
     void process(const CommandCollector::command_block_t &block) {
         std::cout << "bulk: ";
@@ -53,6 +49,7 @@ private:
     Buffer<CommandCollector::command_block_t> buffer;
     std::weak_ptr<CommandCollector> collector;
     std::thread worker_thread;
+    std::promise<Stat> stat_promise;
 };
 
 #endif /* HANDLERS_HPP */
