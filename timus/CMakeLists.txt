@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.1)
 
 project(timus VERSION 0.1.3 LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_BUILD_TYPE DEBUG)
 
 add_executable(t1000 t1000.cpp)
 add_executable(t1001 t1001.cpp)
@@ -38,6 +39,13 @@ add_executable(t1991 t1991.cpp)
 add_executable(t1263 t1263.cpp)
 add_executable(t1585 t1585.cpp)
 add_executable(t1581 t1581.cpp)
+add_executable(t1327 t1327.cpp)
+add_executable(t2056 t2056.cpp)
+add_executable(t1493 t1493.cpp)
+add_executable(t1243 t1243.cpp)
+add_executable(t1607 t1607.cpp)
+add_executable(t1876 t1876.cpp)
+add_executable(t1110 t1110.cpp)
 
 install(TARGETS
   t1000 t1001 t1785 t1293 t2012 t1409 t1877 t2001 t1264 t1787 t1545 t1496 t1196 t1837 t2066 t1639
