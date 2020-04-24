@@ -46,6 +46,7 @@ add_executable(t1243 t1243.cpp)
 add_executable(t1607 t1607.cpp)
 add_executable(t1876 t1876.cpp)
 add_executable(t1110 t1110.cpp)
+add_executable(t1349 t1349.cpp)
 
 install(TARGETS
   t1000 t1001 t1785 t1293 t2012 t1409 t1877 t2001 t1264 t1787 t1545 t1496 t1196 t1837 t2066 t1639
