@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.1)
 project(timus VERSION 0.1.3 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_BUILD_TYPE DEBUG)
+set(CMAKE_BUILD_TYPE RELEASE)
 
 add_executable(t1000 t1000.cpp)
 add_executable(t1001 t1001.cpp)

@@ -22,14 +22,6 @@ public:
 	    num.push_back(std::stoul(tmp));
 
     }
-    big_num(const big_num&) = default;
-    big_num(big_num&& other)
-	: num(std::move(other.num)) {}
-    big_num & operator=(const big_num&) = default;
-    // big_num & operator=(big_num&& other) {
-    // 	num = std::move(other.num);
-    // 	return *this;
-    // }
 
     void reserve(std::size_t n_elem) {
 	num.reserve(n_elem);
@@ -42,51 +34,42 @@ public:
 	return num[0] < val;
     }
     big_num& operator+=(const big_num& other) {
-	bool carry_flag = false;
+	base_t carry_value = 0;
 	int index = 0;
-	for (auto it = other.num.begin(); it != other.num.end() || carry_flag; index++) {
+	for (int j = 0; j < other.num.size() || carry_value; index++) {
 	    if (num.size() < index + 1)
-		num.push_back(0);
-	    if (it != other.num.end()) {
-		num[index] += *it;
-		it++;
+	    	num.push_back(0);
+	    if (j != other.num.size()) {
+		num[index] += other.num[j];
+		j++;
 	    }
-	    if (carry_flag) {
-		num[index]++;
-		carry_flag = false;
-	    }
-	    if (num[index] >= base) {
-		num[index] -= base;
-		carry_flag = true;
-	    }
-
+	    num[index] += carry_value;
+	    carry_value = num[index]/base;
+	    num[index] %= base;
 	}
 	return *this;
     }
-    big_num & operator*=(const big_num& other) {
+
+    friend big_num operator*(const big_num & a, const big_num& b) {
 	base_t carry_value = 0;
-	auto old_val = std::move(num);
+	big_num retval {};
+	retval.reserve(a.num.size() + b.num.size());
 	big_num tmp{};
-	tmp.reserve(23);
-	this->reserve(23);
-	for (int i = 0; i < old_val.size(); i++) {
+	tmp.reserve(a.num.size() + b.num.size());
+	for (int i = 0; i < a.num.size(); i++) {
 	    tmp.num.assign(i, 0);
 	    carry_value = 0;
-	    for (int j = 0; j < other.num.size(); j++) {
-		auto prod = old_val[i]*other.num[j];
+	    for (int j = 0; j < b.num.size(); j++) {
+		auto prod = a.num[i]*b.num[j];
 		auto candidate = prod%base + carry_value;
 		tmp.num.push_back(candidate%base);
 		carry_value = prod/base + candidate/base;
 	    }
-	    if (carry_value != 0)
+	    if (carry_value)
 		tmp.num.push_back(carry_value);
-	    *this += tmp;
+	    retval += tmp;
 	}
-	return *this;
-    }
-    friend big_num operator*(big_num lhs, const big_num& rhs) {
-	lhs *= rhs;
-	return lhs;
+	return retval;
     }
     friend big_num operator+(big_num lhs, const big_num& rhs) {
 	lhs += rhs;
@@ -113,13 +96,6 @@ std::ostream & operator<<(std::ostream &os, const big_num &num) {
     return os;
 }
 
-auto pow_b(const big_num& num, std::size_t n) {
-    big_num seed {"1"};
-    for (int i = 0; i < n; i++)
-	seed *= num;
-    return seed;
-}
-
 auto pow_b_2(const big_num& num, std::size_t n) {
     // if (n == 1) return 1;
     if (n == 1) return num;
@@ -136,8 +112,6 @@ int main(int argc, char *argv[])
     int n = 0;
     std::cin >> n;
     big_num unity {"1"};
-    // unity.reserve(23);
-    // big_num a{"3"}, b{"4"}, c{"5"};
     big_num a, b, c;
     // a.reserve(23);
     // b.reserve(23);
@@ -159,11 +133,19 @@ int main(int argc, char *argv[])
     else
     	std::cout << -1 << "\n";
 
+    // std::string str;
+    // std::cin >> str;
+    // big_num a {str};
+    // std::cin >> str;
+    // big_num b {str};
+    // a.reserve(23);
+    // std::cout << a + b << "\n";
     // std::vector<int> v1, v2;
     // v1.reserve(10);
     // v1.push_back(10);
-    // v2 = std::move(v1);
+    // // v2 = std::move(v1);
     // // v2 = v1;
-    // std::cout << v2.capacity() << "\n";
+    // v1.assign(5, 0);
+    // std::cout << v1.capacity() << "\n";
     // return 0;
 }
